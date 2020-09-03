@@ -1,0 +1,14 @@
+@model JournalIndexViewModel
+@{
+    ViewData["Title"] = "home";
+}
+
+<div class="innerwidth">
+    @foreach (var post in Model.Posts)
+    {
+        @await Html.PartialAsync("~/Views/Partials/Journal/PostPreview.cshtml", post)
+        <br />
+    }
+</div>
+
+@await Html.PartialAsync("~/Views/Partials/Pagination.cshtml", Model.Pagination)

@@ -1,0 +1,166 @@
+﻿<!doctype html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="HandheldFriendly" content="True">
+
+    <link rel="alternate" type="application/rss+xml" title="Matts Blog" href="/rss.xml" />
+    <link rel="alternate" type="application/atom+xml" title="Matts Blog" href="/atom.xml" />
+
+    <title>@ViewData["Title"] - matts blog</title>
+
+    @await Html.PartialAsync("Canonical")
+
+    <style type="text/css">
+        html,
+        body {
+            font-size: 14px;
+            font-family: sans-serif;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: serif;
+        }
+
+        hr {
+            border: none;
+            border-bottom: 1px dashed #c3c3c3;
+        }
+
+        .innerwidth {
+            max-width: 550px;
+            margin: 0 auto;
+        }
+
+        .readon {
+            display: inline-block;
+        }
+
+        .clearfix:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        nav hr {
+            border: none;
+            border-bottom: 1px solid #c3c3c3;
+        }
+
+        main {
+            margin: 20px auto !important;
+        }
+
+        pre {
+            font-family: monospace;
+            overflow: auto;
+            padding: 10px;
+            background: #f2f2f2;
+        }
+
+        article.journal .lead {
+            margin: 2px 0 0;
+        }
+
+        article.journal h1.title {
+            margin: 0;
+        }
+
+        article.journal .date {
+            color: #666;
+            font-size: 12px;
+        }
+
+        article.journal .bleb {
+            margin: 0 0 10px;
+        }
+
+        article.journal img {
+            margin: 28px auto;
+            padding: 4px;
+            max-width: calc(100% - 10px);
+            display: block;
+            border: 1px solid #d5d5d5;
+        }
+
+        @@media (prefers-color-scheme: dark) {
+            html,
+            body {
+                background: #000;
+                color: #dbdbdb;
+            }
+
+            a:not(:active) {
+                color: #88f;
+            }
+
+            a:visited {
+                color: #bc73ff;
+            }
+
+            pre {
+                background: #373737;
+            }
+
+            hr,
+            nav hr,
+            article.journal img {
+                border-color: #444;
+            }
+
+            article.journal .date {
+                color: #959595;
+            }
+
+            article.journal img {
+                opacity: .75;
+            }
+
+            article.journal img:hover {
+                opacity: 1
+            }
+        }
+    </style>
+    @await RenderSectionAsync("Styles", required: false)
+    @Html.Raw(_javaScriptSnippet.FullScript)
+</head>
+
+<body>
+    <nav>
+        <div class="innerwidth">
+            <b><a asp-controller="Journal" asp-action="Index">matts blog</a></b> /
+            <a asp-controller="Blogroll" asp-action="Index">blogroll</a> /
+            <a asp-controller="Journal" asp-action="Archive">archive</a>
+        </div>
+        <hr />
+    </nav>
+
+    <main>
+        @RenderBody()
+    </main>
+
+    <div class="endmatter">
+        <div class="innerwidth">
+            <hr />
+            <p>
+                &copy; @DateTimeOffset.UtcNow.Year /
+                <a href="https://github.com/crookm" rel="noopener">github</a> /
+                <a href="https://twitter.com/mattlc_3" rel="noopener">twitter</a> /
+                mattlcrook@icloud.com (<a href="https://matt28052e.blob.core.windows.net/keys/pgp/Matthew%20Crook%20-%20D410%204AA5%20F6FF%201B6B.pub.asc?sv=2020-10-02&si=PubKeys-Web-17E392CC8ED&sr=b&sig=m9n1DeEWynkIrfwwxm7yu7A3ZE1kYPs4j6lQJOY%2BhUk%3D" rel="noopener">pgp</a>)
+            </p>
+        </div>
+    </div>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>

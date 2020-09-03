@@ -1,0 +1,34 @@
+@model Dictionary<int, List<BlogPostArchive>>
+@{
+    ViewData["Title"] = "archive";
+}
+
+<div class="innerwidth">
+    <h1>Archive</h1>
+
+    <p>
+        @await Html.PartialAsync("~/Views/Shared/Icons/FeedIcon.cshtml", 12)
+        <a asp-action="AtomFeed">atom</a> /
+        <a asp-action="RssFeed">rss</a>
+    </p>
+    <br />
+
+    @foreach (var (year, posts) in Model)
+    {
+        <h3>@year</h3>
+        @foreach (var post in posts)
+        {
+            <p>
+                <time datetime="@post.Published.ToString("O")">
+                    @post.Published.ToString("yyyy-MM-dd")
+                </time> /
+                <a asp-route="journal" asp-route-slug="@post.Slug"
+                   asp-route-year="@post.Published.Year">
+                    @post.Title
+                </a>
+            </p>
+        }
+    }
+
+    <br />
+</div>

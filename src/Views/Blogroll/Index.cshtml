@@ -1,0 +1,21 @@
+@model BlogrollIndexViewModel
+@{
+    ViewData["Title"] = "blogroll";
+}
+
+<div class="innerwidth">
+    <h2>Blogroll</h2>
+    <p class="lead">
+        The following are some blogs from writers that I like, which I regularly update.
+        Maybe you'll like them too, check them out!
+    </p>
+    <br />
+
+    @foreach (var blog in Model.Blogs)
+    {
+        @await Html.PartialAsync("~/Views/Partials/Blogroll/RollEntry.cshtml", blog)
+        <br />
+    }
+</div>
+
+@await Html.PartialAsync("~/Views/Partials/Pagination.cshtml", Model.Pagination)

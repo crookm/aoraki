@@ -1,0 +1,28 @@
+@using Aoraki.Web.Extensions
+@model Aoraki.Web.Models.Entities.BlogPost
+@{
+    ViewData["Title"] = Model.Title.ToLowerInvariant();
+}
+
+<article class="journal innerwidth">
+    <h1 class="title">@Model.Title</h1>
+    <section class="frontmatter">
+        @if (!string.IsNullOrEmpty(Model.Lead))
+        {
+            <p class="lead">@Model.Lead</p>
+        }
+
+        <p class="date">
+            Published on
+            <datetime datetime="@Model.Published?.ToString("O")">
+                @Model.Published?.ToString("f")
+            </datetime>
+        </p>
+
+        <hr />
+    </section>
+
+    @Html.Raw(Model.ToHtml())
+
+    @await Html.PartialAsync("Icons/Bleb")
+</article>

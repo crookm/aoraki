@@ -1,0 +1,17 @@
+@model Aoraki.Web.Models.Entities.BlogrollBlog
+
+<section>
+    <h3>
+        <a href="@Model.Url" rel="noopener">
+            @Model.Title
+        </a>
+    </h3>
+    <p>
+        Link added on
+        <time datetime="@Model.Timestamp?.ToString("O")">
+            @Model.Timestamp?.ToString("D")
+        </time>
+    </p>
+    <p>@Model.Description</p>
+
+</section>

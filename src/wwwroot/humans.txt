@@ -1,0 +1,11 @@
+/* TEAM */
+	Devloper: Matthew Crook
+	Twitter: @mattlc_3
+	From: Auckland, New Zealand
+
+/* SITE */
+	Last update: 2020-11-28
+	Language: English
+	Development: Visual Studio Code, WSL Ubuntu
+	Runtime: ASP.NET 5
+	Hosting: DigitalOcean App Platform (https://m.do.co/c/f8ffd8a5f356)
