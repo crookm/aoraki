@@ -33,17 +33,15 @@
                     var truncatedText = postText.Substring(0, Math.Min(postText.Length, 250));
                 }
                 @truncatedText...
-            </p>
-            <p>
-                <a asp-route="journal" asp-route-slug="@post.Slug"
-                   asp-route-year="@post.Published.Year">
-                    Read more &rarr;
+                <a asp-route="journal" asp-route-slug="@post.Slug" asp-route-year="@post.Published.Year">
+                    [ read on &rarr; ]
                 </a>
             </p>
         </section>
     }
 </div>
 
+<hr />
 <p>
     @if (Model.Pagination.CurrentPage > 1)
     {
