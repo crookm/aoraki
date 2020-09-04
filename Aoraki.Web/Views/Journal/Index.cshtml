@@ -1,0 +1,62 @@
+@using Aoraki.Web.Extensions
+@model JournalIndexViewModel
+@{
+    ViewData["Title"] = "Home page";
+    
+    var pageNext = Model.Pagination.CurrentPage + 1;
+    var pagePrev = Model.Pagination.CurrentPage - 1;
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+</div>
+
+<div>
+    @foreach (var post in Model.Posts)
+    {
+        <section>
+            <h3>
+                <a asp-route="journal" asp-route-slug="@post.Slug"
+                   asp-route-year="@post.Published.Year">
+                    @post.Title
+                </a>
+            </h3>
+            <p>
+                Published
+                <time datetime="@post.Published.ToString("O")">
+                    @post.Published.ToString("D")
+                </time>
+            </p>
+            <p>
+                @{
+                    var postText = post.ToPlainText();
+                    var truncatedText = postText.Substring(0, Math.Min(postText.Length, 250));
+                }
+                @truncatedText...
+            </p>
+            <p>
+                <a asp-route="journal" asp-route-slug="@post.Slug"
+                   asp-route-year="@post.Published.Year">
+                    Read more &rarr;
+                </a>
+            </p>
+        </section>
+    }
+</div>
+
+<p>
+    @if (Model.Pagination.CurrentPage > 1)
+    {
+        <a asp-controller="Journal" asp-action="Index" asp-route-page="@pagePrev">
+            &larr; Prev
+        </a>
+    }
+    @if (Model.Pagination.CurrentPage < Model.Pagination.TotalPages)
+    {
+        <a asp-controller="Journal" asp-action="Index" asp-route-page="@pageNext">
+            Next &rarr;
+        </a>
+    }
+    |
+    Page @Model.Pagination.CurrentPage of @Model.Pagination.TotalPages
+</p>
