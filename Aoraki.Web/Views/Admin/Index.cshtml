@@ -1,0 +1,31 @@
+@model IEnumerable<JournalPost>
+
+<h3>New post</h3>
+<form asp-action="CreatePost">
+    <div class="form-group row">
+        <label for="post-title" class="col-md-2">Title</label>
+        <input id="post-title" type="text" name="title" class="form-control col-md-10"/>
+    </div>
+
+    <div class="form-group row">
+        <label for="post-slug" class="col-md-2">Slug</label>
+        <input id="post-slug" type="text" name="slug" class="form-control col-md-10"/>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary"/>
+    </div>
+</form>
+
+<hr/>
+
+<h3>Posts</h3>
+<ul>
+    @foreach (var post in Model)
+    {
+        <li>
+            [ <a asp-action="EditPost" asp-route-id="@post.Id">Edit</a> ]
+            @post.Title
+        </li>
+    }
+</ul>

@@ -1,0 +1,47 @@
+@model Aoraki.Web.Models.ViewModels.AdminEditPostViewModel
+@section Stylesheets
+{
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simplemde@1.11.2/dist/simplemde.min.css" integrity="sha256-Is0XNfNX8KF/70J2nv8Qe6BWyiXrtFxKfJBHoDgNAEM=" crossorigin="anonymous">
+}
+
+@{
+    ViewData["Title"] = $"Edit - {Model.Post.Title}";
+}
+
+<p><a asp-action="Index">&larr; Back to admin home</a></p>
+
+<h1>Edit post</h1>
+<form asp-action="EditPost">
+    <div class="form-group row">
+        <label asp-for="Post.Title" class="col-md-2"></label>
+        <input type="text" asp-for="Post.Title" class="form-control col-md-10"/>
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="Post.Slug" class="col-md-2"></label>
+        <input type="text" asp-for="Post.Slug" class="form-control col-md-10"/>
+    </div>
+    
+    <div class="form-group row">
+        <label asp-for="Post.Tags" class="col-md-2"></label>
+        <input type="text" asp-for="Post.Tags" class="form-control col-md-10"/>
+    </div>
+
+    <textarea id="post-content" asp-for="Post.Content"></textarea>
+    
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-primary"/>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" asp-for="IsPublished">
+          <label class="form-check-label" asp-for="IsPublished">Published</label>
+        </div>
+    </div>
+</form>
+
+@section Scripts
+{
+    <script src="https://cdn.jsdelivr.net/npm/simplemde@1.11.2/dist/simplemde.min.js" integrity="sha256-6sZs7OGP0Uzcl7UDsLaNsy1K0KTZx1+6yEVrRJMn2IM=" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+    let markdown = new SimpleMDE({ element: $("#post-content")[0] });
+    </script>
+}

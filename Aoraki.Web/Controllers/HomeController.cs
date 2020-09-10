@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Aoraki.Web.Models;
+using Aoraki.Web.Models.ViewModels;
 
 namespace Aoraki.Web.Controllers
 {

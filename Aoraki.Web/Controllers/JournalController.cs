@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Aoraki.Web.Contracts;
 using Aoraki.Web.Extensions;
 using Aoraki.Web.Models;
+using Aoraki.Web.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Aoraki.Web.Controllers
@@ -43,9 +44,9 @@ namespace Aoraki.Web.Controllers
 
         public async Task<IActionResult> Read(int year, string slug)
         {
-            var post = await _postService.GetPostAsync(slug);
+            var post = await _postService.GetPostBySlugAsync(slug);
             if (post == null) return NotFound();
-            if (post.Published.Year != year) return new NotFoundResult();
+            if (post.Published?.Year != year) return new NotFoundResult();
             return View(post);
         }
 
@@ -53,7 +54,7 @@ namespace Aoraki.Web.Controllers
         [Route("journal/{year}/{slug}.txt")]
         public async Task<IActionResult> ReadPlaintext(string slug)
         {
-            var post = await _postService.GetPostAsync(slug);
+            var post = await _postService.GetPostBySlugAsync(slug);
             if (post == null) return NotFound();
             return Ok(post.ToPlainText());
         }
@@ -62,7 +63,7 @@ namespace Aoraki.Web.Controllers
         [Route("journal/{year}/{slug}.md")]
         public async Task<IActionResult> ReadMarkdown(string slug)
         {
-            var post = await _postService.GetPostAsync(slug);
+            var post = await _postService.GetPostBySlugAsync(slug);
             if (post == null) return NotFound();
             return Ok(post.Content);
         }
@@ -71,7 +72,7 @@ namespace Aoraki.Web.Controllers
         [Route("journal/{year}/{slug}.json")]
         public async Task<IActionResult> ReadJson(string slug)
         {
-            var post = await _postService.GetPostAsync(slug);
+            var post = await _postService.GetPostBySlugAsync(slug);
             if (post == null) return NotFound();
             return Ok(post);
         }

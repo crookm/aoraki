@@ -1,5 +1,5 @@
 @using Aoraki.Web.Extensions
-@model JournalIndexViewModel
+@model Aoraki.Web.Models.ViewModels.JournalIndexViewModel
 @{
     ViewData["Title"] = "Home page";
     
@@ -17,14 +17,14 @@
         <section>
             <h3>
                 <a asp-route="journal" asp-route-slug="@post.Slug"
-                   asp-route-year="@post.Published.Year">
+                   asp-route-year="@post.Published?.Year">
                     @post.Title
                 </a>
             </h3>
             <p>
                 Published
-                <time datetime="@post.Published.ToString("O")">
-                    @post.Published.ToString("D")
+                <time datetime="@post.Published?.ToString("O")">
+                    @post.Published?.ToString("D")
                 </time>
             </p>
             <p>
@@ -33,7 +33,7 @@
                     var truncatedText = postText.Substring(0, Math.Min(postText.Length, 250));
                 }
                 @truncatedText...
-                <a asp-route="journal" asp-route-slug="@post.Slug" asp-route-year="@post.Published.Year">
+                <a asp-route="journal" asp-route-slug="@post.Slug" asp-route-year="@post.Published?.Year">
                     [ read on &rarr; ]
                 </a>
             </p>

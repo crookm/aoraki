@@ -1,19 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Aoraki.Web.Contracts;
 using Aoraki.Web.Models;
 using Aoraki.Web.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
-using Microsoft.Net.Http.Headers;
 
 namespace Aoraki.Web
 {
@@ -34,6 +27,7 @@ namespace Aoraki.Web
 
             services.AddSingleton<IJournalPostService, JournalPostService>();
 
+            services.AddAntiforgery();
             services.AddResponseCaching();
             services.AddControllersWithViews();
             services.AddRouting(options =>

@@ -8,8 +8,8 @@
     <h1>@Model.Title</h1>
     <p>
         Published
-        <time datetime="@Model.Published.ToString("O")">
-            @Model.Published.ToString("f")
+        <time datetime="@Model.Published?.ToString("O")">
+            @Model.Published?.ToString("f")
         </time>
     </p>
     <hr/>

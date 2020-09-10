@@ -23,21 +23,62 @@ namespace Aoraki.Web.Services
             _postCollection = database.GetCollection<JournalPost>(_journalSettings.DbPostsCollection);
         }
 
-        public async Task<JournalPost> GetPostAsync(string slug)
+        public async Task<string> CreatePostAsync(JournalPost post)
         {
-            var filter = GetPublishedPostsFilter()
-                         & Builders<JournalPost>.Filter.Eq(p => p.Slug, slug);
-            return await _postCollection.Find(filter).FirstOrDefaultAsync();
+            var id = ObjectId.GenerateNewId().ToString();
+            await _postCollection.InsertOneAsync(new JournalPost
+            {
+                Id = id,
+                Title = post.Title,
+                Slug = post.Slug,
+                Tags = post.Tags,
+                Created = post.Created,
+                Published = post.Published,
+                Content = post.Content
+            });
+
+            return id;
         }
 
+        public async Task UpdatePostAsync(string id, JournalPost post)
+        {
+            var filter = Builders<JournalPost>.Filter.Eq(p => p.Id, id);
+            var update = Builders<JournalPost>.Update
+                .Set(p => p.Title, post.Title)
+                .Set(p => p.Slug, post.Slug)
+                .Set(p => p.Tags, post.Tags)
+                .Set(p => p.Published, post.Published)
+                .Set(p => p.Content, post.Content);
+            await _postCollection.UpdateOneAsync(filter, update);
+        }
+        
         public async Task<int> GetTotalPostCountAsync()
         {
             return (int) await _postCollection.CountDocumentsAsync(GetPublishedPostsFilter());
         }
 
-        public async Task<IEnumerable<JournalPost>> GetPostsAsync(int skip, int take)
+        public async Task<JournalPost> GetPostByIdAsync(string id, bool allowUnpublished = false)
         {
-            return await _postCollection.Find(GetPublishedPostsFilter())
+            var filter = Builders<JournalPost>.Filter.Eq(p => p.Id, id);
+            if (!allowUnpublished)
+                filter &= GetPublishedPostsFilter();
+            return await _postCollection.Find(filter).FirstOrDefaultAsync();
+        }
+
+        public async Task<JournalPost> GetPostBySlugAsync(string slug, bool allowUnpublished = false)
+        {
+            var filter = Builders<JournalPost>.Filter.Eq(p => p.Slug, slug);
+            if (!allowUnpublished)
+                filter &= GetPublishedPostsFilter();
+            return await _postCollection.Find(filter).FirstOrDefaultAsync();
+        }
+
+        public async Task<IEnumerable<JournalPost>> GetPostsAsync(int skip, int take, bool allowUnpublished = false)
+        {
+            var filter = Builders<JournalPost>.Filter.Empty;
+            if (!allowUnpublished)
+                filter &= GetPublishedPostsFilter();
+            return await _postCollection.Find(filter)
                 .SortByDescending(p => p.Published)
                 .Skip(skip).Limit(take)
                 .ToListAsync();
@@ -50,7 +91,7 @@ namespace Aoraki.Web.Services
                 {
                     Slug = p.Slug,
                     Title = p.Title,
-                    Published = p.Published
+                    Published = p.Published.Value
                 })
                 .SortByDescending(p => p.Published)
                 .ToListAsync())

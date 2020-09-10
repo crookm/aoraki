@@ -1,10 +1,11 @@
 using System;
-using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace Aoraki.Web.Models
 {
+    [Bind("Title", "Slug", "Tags", "Content")]
     public class JournalPost
     {
         [BsonId]
@@ -19,7 +20,7 @@ namespace Aoraki.Web.Models
         [BsonElement("created")]
         public DateTime Created { get; set; }
         [BsonElement("published")]
-        public DateTime Published { get; set; }
+        public DateTime? Published { get; set; }
         [BsonElement("content")]
         public string Content { get; set; }
     }

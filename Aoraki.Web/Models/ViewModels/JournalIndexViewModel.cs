@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Aoraki.Web.Models
+namespace Aoraki.Web.Models.ViewModels
 {
     public class JournalIndexViewModel
     {
