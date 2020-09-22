@@ -34,6 +34,7 @@ namespace Aoraki.Web
             {
                 options.LowercaseUrls = true;
                 options.LowercaseQueryStrings = true;
+                options.AppendTrailingSlash = false;
             });
         }
 

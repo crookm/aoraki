@@ -25,9 +25,9 @@ namespace Aoraki.Web.Controllers
             var totalPages = (int) Math.Ceiling((decimal) totalPosts / (decimal) PostsPerPage);
 
             if (page < 1)
-                return RedirectToActionPermanent(nameof(Index), new {page = 1});
+                return RedirectToAction(nameof(Index), new {page = 1});
             if (page > totalPages)
-                return RedirectToActionPermanent(nameof(Index), new {page = totalPages});
+                return RedirectToAction(nameof(Index), new {page = totalPages});
 
             var posts = await _postService.GetPostsAsync((page - 1) * PostsPerPage, PostsPerPage);
             return View(new JournalIndexViewModel

@@ -1,10 +1,10 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Aoraki.Web.Contracts;
 using Aoraki.Web.Models;
 using Aoraki.Web.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using TimeZoneConverter;
 
 namespace Aoraki.Web.Controllers
 {
@@ -49,6 +49,7 @@ namespace Aoraki.Web.Controllers
             return View(new AdminEditPostViewModel
             {
                 IsPublished = post.Published.HasValue,
+                Tags = post.Tags == null ? string.Empty : string.Join(", ", post.Tags),
                 Post = post
             });
         }
@@ -64,7 +65,15 @@ namespace Aoraki.Web.Controllers
             {
                 var oldPost = await _postService.GetPostByIdAsync(id, allowUnpublished: true);
                 if (oldPost == null) return NotFound();
+                
+                // Tags
+                model.Post.Tags = model?.Tags
+                    ?.Split(',')
+                    ?.Select(tag => tag.Trim())
+                    ?.Where(tag => !string.IsNullOrEmpty(tag))
+                    ?.ToArray();
 
+                // Publishing
                 model.Post.Published = oldPost.Published;
                 if (model.IsPublished)
                 {

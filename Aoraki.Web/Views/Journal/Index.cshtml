@@ -1,17 +1,10 @@
 @using Aoraki.Web.Extensions
 @model Aoraki.Web.Models.ViewModels.JournalIndexViewModel
 @{
-    ViewData["Title"] = "Home page";
-    
-    var pageNext = Model.Pagination.CurrentPage + 1;
-    var pagePrev = Model.Pagination.CurrentPage - 1;
+    ViewData["Title"] = "home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-</div>
-
-<div>
+<div class="innerwidth">
     @foreach (var post in Model.Posts)
     {
         <section>
@@ -27,34 +20,24 @@
                     @post.Published?.ToString("D")
                 </time>
             </p>
+            @* @if (post.Tags != null)
+            {
+                <p>[ @string.Join(", ", post.Tags) ]</p>
+            } *@
             <p>
                 @{
                     var postText = post.ToPlainText();
                     var truncatedText = postText.Substring(0, Math.Min(postText.Length, 250));
                 }
                 @truncatedText...
-                <a asp-route="journal" asp-route-slug="@post.Slug" asp-route-year="@post.Published?.Year">
+                <a asp-route="journal" asp-route-slug="@post.Slug"
+                   asp-route-year="@post.Published?.Year">
                     [ read on &rarr; ]
                 </a>
             </p>
         </section>
+        <br />
     }
 </div>
 
-<hr />
-<p>
-    @if (Model.Pagination.CurrentPage > 1)
-    {
-        <a asp-controller="Journal" asp-action="Index" asp-route-page="@pagePrev">
-            &larr; Prev
-        </a>
-    }
-    @if (Model.Pagination.CurrentPage < Model.Pagination.TotalPages)
-    {
-        <a asp-controller="Journal" asp-action="Index" asp-route-page="@pageNext">
-            Next &rarr;
-        </a>
-    }
-    |
-    Page @Model.Pagination.CurrentPage of @Model.Pagination.TotalPages
-</p>
+@await Html.PartialAsync("Pagination", Model.Pagination)

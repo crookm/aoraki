@@ -1,49 +1,107 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿<!doctype html>
+<html lang="en" dir="ltr">
+
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>@ViewData["Title"] - Matt Crook</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
-    @await RenderSectionAsync("Stylesheets", required: false)
-    <link rel="stylesheet" href="~/css/site.css"/>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="HandheldFriendly" content="True">
+
+    <title>@ViewData["Title"] - matts blog</title>
+
+    <style type="text/css">
+        html,
+        body {
+            font-size: 14px;
+            font-family: sans-serif;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: serif;
+        }
+
+        hr {
+            border: none;
+            border-bottom: 1px dashed #c3c3c3;
+        }
+
+        .innerwidth {
+            max-width: 550px;
+            margin: 0 auto;
+        }
+
+        .readon {
+            white-space: nowrap;
+        }
+
+        .clearfix:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        nav hr {
+            border: none;
+            border-bottom: 1px solid #c3c3c3;
+        }
+
+        main {
+            margin: 20px auto !important;
+        }
+
+        pre {
+            font-family: monospace;
+            overflow: auto;
+            padding: 5px;
+        }
+
+        article.journal .lead {
+            margin: 2px 0 0;
+        }
+
+        article.journal h1.title {
+            margin: 0;
+        }
+
+        article.journal .date {
+            color: #666;
+            font-size: 12px;
+        }
+
+        article.journal .bleb {
+            margin: 0 0 10px;
+        }
+    </style>
+    @await RenderSectionAsync("Styles", required: false)
 </head>
+
 <body>
-<header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-        <div class="container">
-            <a class="navbar-brand" asp-controller="Journal" asp-action="Index">Matt's Blog</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-controller="Journal" asp-action="Index">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-controller="Journal" asp-action="Archive">Archive</a>
-                    </li>
-                </ul>
-            </div>
+    <nav>
+        <div class="innerwidth">
+            <b><a asp-controller="Journal" asp-action="Index">matts blog</a></b> /
+            <a asp-controller="Journal" asp-action="Archive">archive</a>
         </div>
+        <hr />
     </nav>
-</header>
-<div class="container">
-    <main role="main" class="pb-3">
+
+    <main>
         @RenderBody()
     </main>
-</div>
 
-<footer class="border-top footer text-muted">
-    <div class="container">
-        &copy; Matt Crook, @DateTimeOffset.UtcNow.Year
+    <div class="endmatter">
+        <div class="innerwidth">
+            <hr />
+            <p>&copy; @DateTimeOffset.UtcNow.Year</p>
+        </div>
     </div>
-</footer>
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
-@await RenderSectionAsync("Scripts", required: false)
+
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 </html>
