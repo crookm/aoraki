@@ -7,7 +7,10 @@
 <article class="journal innerwidth">
     <h1 class="title">@Model.Title</h1>
     <section class="frontmatter">
-        <p class="lead">An introduction to the journal piece, best kept shorter than most.</p>
+        @if (!string.IsNullOrEmpty(Model.Lead))
+        {
+            <p class="lead">@Model.Lead</p>
+        }
 
         @* @if (Model.Tags != null)
         {

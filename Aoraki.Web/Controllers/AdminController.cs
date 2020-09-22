@@ -33,6 +33,7 @@ namespace Aoraki.Web.Controllers
                 Tags = new string[] { },
                 Created = DateTime.UtcNow,
                 Published = null,
+                Lead = "",
                 Content = ""
             });
 

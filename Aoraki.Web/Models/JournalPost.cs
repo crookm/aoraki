@@ -5,7 +5,12 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Aoraki.Web.Models
 {
-    [Bind("Title", "Slug", "Tags", "Content")]
+    [Bind(
+        nameof(JournalPost.Title),
+        nameof(JournalPost.Slug),
+        nameof(JournalPost.Tags),
+        nameof(JournalPost.Lead),
+        nameof(JournalPost.Content))]
     public class JournalPost
     {
         [BsonId]
@@ -21,6 +26,8 @@ namespace Aoraki.Web.Models
         public DateTime Created { get; set; }
         [BsonElement("published")]
         public DateTime? Published { get; set; }
+        [BsonElement("lead")]
+        public string Lead { get; set; }
         [BsonElement("content")]
         public string Content { get; set; }
     }

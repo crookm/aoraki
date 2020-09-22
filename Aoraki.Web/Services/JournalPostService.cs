@@ -34,6 +34,7 @@ namespace Aoraki.Web.Services
                 Tags = post.Tags,
                 Created = post.Created,
                 Published = post.Published,
+                Lead = post.Lead,
                 Content = post.Content
             });
 
@@ -48,6 +49,7 @@ namespace Aoraki.Web.Services
                 .Set(p => p.Slug, post.Slug)
                 .Set(p => p.Tags, post.Tags)
                 .Set(p => p.Published, post.Published)
+                .Set(p => p.Lead, post.Lead)
                 .Set(p => p.Content, post.Content);
             await _postCollection.UpdateOneAsync(filter, update);
         }
