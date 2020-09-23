@@ -1,0 +1,19 @@
+[Unit]
+Description=Matts Blog
+After=network.target
+Requires=mongod.service
+
+[Service]
+WorkingDirectory=/opt/mattsblog
+ExecStart=/usr/bin/dotnet /opt/mattsblog/Aoraki.Web.dll
+Restart=always
+RestartSec=2
+KillSignal=SIGINT
+SyslogIdentifier=matts-blog
+User=matt
+Environment=ASPNETCORE_ENVIRONMENT=Production
+Environment=ASPNETCORE_URLS=http://127.0.0.1:5100
+Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
+
+[Install]
+WantedBy=multi-user.target
