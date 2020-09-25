@@ -81,9 +81,43 @@
         article.journal img {
             margin: 28px auto;
             padding: 4px;
-            max-width: 540px;
+            max-width: calc(100% - 10px);
             display: block;
             border: 1px solid #d5d5d5;
+        }
+
+        @@media (prefers-color-scheme: dark) {
+            html,
+            body {
+                background: #000;
+                color: #dbdbdb;
+            }
+
+            a:not(:active) {
+                color: #88f;
+            }
+
+            a:visited {
+                color: #bc73ff;
+            }
+
+            hr,
+            nav hr,
+            article.journal img {
+                border-color: #444;
+            }
+
+            article.journal .date {
+                color: #959595;
+            }
+
+            article.journal img {
+                opacity: .75;
+            }
+
+            article.journal img:hover {
+                opacity: 1
+            }
         }
     </style>
     @await RenderSectionAsync("Styles", required: false)
