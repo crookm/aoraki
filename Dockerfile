@@ -14,8 +14,9 @@ FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
 WORKDIR /app
 COPY --from=build /app/out .
 
-ENV JOURNALSETTINGS__DBCONNECTION="mongodb://127.0.0.1:27017"
 ENV JOURNALSETTINGS__DBNAME="aoraki"
 ENV JOURNALSETTINGS__DBPOSTSCOLLECTION="posts"
+
+EXPOSE 80
 
 ENTRYPOINT ["dotnet", "Aoraki.Web.dll"]
