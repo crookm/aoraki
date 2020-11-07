@@ -19,6 +19,7 @@ namespace Aoraki.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
+            if (!User.Identity.IsAuthenticated) return RedirectToAction("Login", "Account");
             var posts = await _postService.GetPostsAsync(0, 99, allowUnpublished: true);
             return View(posts);
         }
@@ -26,6 +27,7 @@ namespace Aoraki.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> CreatePost(string title, string slug)
         {
+            if (!User.Identity.IsAuthenticated) return RedirectToAction("Login", "Account");
             var postId = await _postService.CreatePostAsync(new JournalPost
             {
                 Title = title,
@@ -43,6 +45,7 @@ namespace Aoraki.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> EditPost(string id)
         {
+            if (!User.Identity.IsAuthenticated) return RedirectToAction("Login", "Account");
             if (string.IsNullOrEmpty(id)) return NotFound();
             var post = await _postService.GetPostByIdAsync(id, allowUnpublished: true);
             if (post == null) return NotFound();
@@ -61,6 +64,7 @@ namespace Aoraki.Web.Controllers
             string id,
             AdminEditPostViewModel model)
         {
+            if (!User.Identity.IsAuthenticated) return RedirectToAction("Login", "Account");
             if (string.IsNullOrEmpty(id)) return NotFound();
             if (ModelState.IsValid)
             {
