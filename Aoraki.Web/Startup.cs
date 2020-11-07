@@ -1,6 +1,8 @@
 using Aoraki.Web.Contracts;
 using Aoraki.Web.Models;
 using Aoraki.Web.Services;
+using AspNetCore.Identity.Mongo;
+using AspNetCore.Identity.Mongo.Model;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -27,6 +29,13 @@ namespace Aoraki.Web
 
             services.AddSingleton<IJournalPostService, JournalPostService>();
 
+            services.AddIdentityMongoDbProvider<MongoUser>(options => {
+                options.ConnectionString = Configuration.GetSection(nameof(JournalSettings))["DbConnection"];
+                options.MigrationCollection = "_identity-migrations";
+                options.UsersCollection = "identity-users";
+                options.RolesCollection = "identity-roles";
+            });
+
             services.AddAntiforgery();
             services.AddResponseCaching();
             services.AddControllersWithViews();
@@ -49,6 +58,7 @@ namespace Aoraki.Web
 
             app.UseRouting();
             app.UseAuthorization();
+            app.UseAuthentication();
             app.UseResponseCaching();
 
             app.UseEndpoints(endpoints =>
@@ -56,7 +66,7 @@ namespace Aoraki.Web
                 endpoints.MapControllerRoute(
                     name: "journal",
                     pattern: "journal/{year}/{slug}",
-                    defaults: new {controller = "Journal", action = "Read"});
+                    defaults: new { controller = "Journal", action = "Read" });
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Journal}/{action=Index}/{id?}");
