@@ -27,6 +27,8 @@ namespace Aoraki.Web
             services.AddSingleton<IJournalSettings>(provider =>
                 provider.GetRequiredService<IOptions<JournalSettings>>().Value);
 
+            services.AddApplicationInsightsTelemetry();
+
             services.AddSingleton<IJournalPostService, JournalPostService>();
 
             services.AddIdentityMongoDbProvider<MongoUser>(options => {

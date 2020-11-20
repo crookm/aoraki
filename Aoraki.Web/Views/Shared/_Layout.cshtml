@@ -121,6 +121,7 @@
         }
     </style>
     @await RenderSectionAsync("Styles", required: false)
+    @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
 
 <body>
