@@ -56,7 +56,14 @@ namespace Aoraki.Web
             else
                 app.UseExceptionHandler("/Home/Error");
 
-            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                OnPrepareResponse = ctx =>
+                {
+                    ctx.Context.Response.Headers.Add(
+                        "Cache-Control", $"public, max-age=604800");
+                }
+            });
 
             app.UseRouting();
             app.UseAuthorization();
