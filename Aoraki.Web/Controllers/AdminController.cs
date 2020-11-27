@@ -5,15 +5,18 @@ using Aoraki.Web.Contracts;
 using Aoraki.Web.Models;
 using Aoraki.Web.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Aoraki.Web.Controllers
 {
     public class AdminController : Controller
     {
+        private readonly ILogger<AdminController> _logger;
         private readonly IJournalPostService _postService;
 
-        public AdminController(IJournalPostService postService)
+        public AdminController(ILogger<AdminController> logger, IJournalPostService postService)
         {
+            _logger = logger;
             _postService = postService;
         }
 
@@ -39,6 +42,7 @@ namespace Aoraki.Web.Controllers
                 Content = ""
             });
 
+            _logger.LogInformation("Person created post with id {0}", postId);
             return RedirectToAction(nameof(EditPost), new {id = postId});
         }
 
@@ -87,6 +91,7 @@ namespace Aoraki.Web.Controllers
                 }
 
                 await _postService.UpdatePostAsync(id, model.Post);
+                _logger.LogInformation("Person updated post with id {0}", id);
             }
 
             return RedirectToAction(nameof(EditPost), new {id});

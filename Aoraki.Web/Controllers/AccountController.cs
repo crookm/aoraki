@@ -3,16 +3,19 @@ using System.Threading.Tasks;
 using AspNetCore.Identity.Mongo.Model;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Aoraki.Web.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly ILogger<AccountController> _logger;
         private readonly SignInManager<MongoUser> _signInManager;
         private readonly UserManager<MongoUser> _userManager;
 
-        public AccountController(SignInManager<MongoUser> signInManager, UserManager<MongoUser> userManager)
+        public AccountController(ILogger<AccountController> logger, SignInManager<MongoUser> signInManager, UserManager<MongoUser> userManager)
         {
+            _logger = logger;
             _signInManager = signInManager;
             _userManager = userManager;
         }
@@ -30,12 +33,17 @@ namespace Aoraki.Web.Controllers
         public async Task<IActionResult> Login([Required] string email, [Required] string password, string redirectUrl)
         {
             var user = await _userManager.FindByNameAsync(email);
-            if (user == null) return Unauthorized("unauthorized");
+            if (user == null)
+            {
+                _logger.LogWarning("Person attempted to authorise with email {0}, but failed as it does not exist", email);
+                return Unauthorized("unauthorized");
+            }
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, password, lockoutOnFailure: true);
             if (result.Succeeded)
             {
                 await _signInManager.SignInAsync(user, isPersistent: true);
+                _logger.LogInformation("Person successfully authorised with email {0}", email);
                 if (string.IsNullOrEmpty(redirectUrl))
                     return RedirectToAction(nameof(AdminController.Index), "admin");
                 else return Redirect(redirectUrl);
