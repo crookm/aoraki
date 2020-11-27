@@ -19,29 +19,32 @@ namespace Aoraki.Web.Controllers
             _postService = postService;
         }
 
+        [ResponseCache(Duration = 14400, VaryByQueryKeys = new[] { "page" })]
         public async Task<IActionResult> Index(int page = 1)
         {
             var totalPosts = await _postService.GetTotalPostCountAsync();
-            var totalPages = (int) Math.Ceiling((decimal) totalPosts / (decimal) PostsPerPage);
+            var totalPages = (int)Math.Ceiling((decimal)totalPosts / (decimal)PostsPerPage);
 
             if (page < 1)
-                return RedirectToAction(nameof(Index), new {page = 1});
+                return RedirectToAction(nameof(Index), new { page = 1 });
             if (page > totalPages)
-                return RedirectToAction(nameof(Index), new {page = totalPages});
+                return RedirectToAction(nameof(Index), new { page = totalPages });
 
             var posts = await _postService.GetPostsAsync((page - 1) * PostsPerPage, PostsPerPage);
             return View(new JournalIndexViewModel
             {
-                Pagination = new Pagination{CurrentPage = page, TotalPages = totalPages},
+                Pagination = new Pagination { CurrentPage = page, TotalPages = totalPages },
                 Posts = posts
             });
         }
 
+        [ResponseCache(Duration = 14400)]
         public async Task<IActionResult> Archive()
         {
             return View(await _postService.GetPostsArchiveAsync());
         }
 
+        [ResponseCache(Duration = 604800)]
         public async Task<IActionResult> Read(int year, string slug)
         {
             var post = await _postService.GetPostBySlugAsync(slug);
@@ -51,6 +54,7 @@ namespace Aoraki.Web.Controllers
         }
 
         [Produces("text/plain")]
+        [ResponseCache(Duration = 604800)]
         [Route("journal/{year}/{slug}.txt")]
         public async Task<IActionResult> ReadPlaintext(string slug)
         {
@@ -60,6 +64,7 @@ namespace Aoraki.Web.Controllers
         }
 
         [Produces("text/plain")]
+        [ResponseCache(Duration = 604800)]
         [Route("journal/{year}/{slug}.md")]
         public async Task<IActionResult> ReadMarkdown(string slug)
         {
@@ -69,6 +74,7 @@ namespace Aoraki.Web.Controllers
         }
 
         [Produces("application/json")]
+        [ResponseCache(Duration = 604800)]
         [Route("journal/{year}/{slug}.json")]
         public async Task<IActionResult> ReadJson(string slug)
         {
