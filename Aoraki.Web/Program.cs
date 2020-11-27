@@ -12,6 +12,9 @@ namespace Aoraki.Web
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
+                .ConfigureWebHostDefaults(webBuilder => {
+                    webBuilder.UseSentry("https://f62151a26a34404aafb1668adef94ebe@o483303.ingest.sentry.io/5534756");
+                    webBuilder.UseStartup<Startup>();
+                });
     }
 }
