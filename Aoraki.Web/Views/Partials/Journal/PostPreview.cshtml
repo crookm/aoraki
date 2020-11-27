@@ -1,0 +1,33 @@
+@using Aoraki.Web.Extensions
+@model JournalPost
+
+<section>
+    <h3>
+        <a asp-route="journal" asp-route-slug="@Model.Slug"
+            asp-route-year="@Model.Published?.Year">
+            @Model.Title
+        </a>
+    </h3>
+    <p>
+        Published
+        <time datetime="@Model.Published?.ToString("O")">
+            @Model.Published?.ToString("D")
+        </time>
+    </p>
+    @* @if (Model.Tags != null)
+    {
+        <p>[ @string.Join(", ", Model.Tags) ]</p>
+    } *@
+    <p>
+        @{
+            var postText = Model.ToPlainText();
+            var truncatedText = postText.Substring(0, Math.Min(postText.Length, 250));
+        }
+        @truncatedText...
+        <a asp-route="journal" asp-route-slug="@Model.Slug"
+            asp-route-year="@Model.Published?.Year"
+            class="readon">
+            [ read on &rarr; ]
+        </a>
+    </p>
+</section>
