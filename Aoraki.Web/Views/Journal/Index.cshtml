@@ -1,4 +1,3 @@
-@using Aoraki.Web.Extensions
 @model Aoraki.Web.Models.ViewModels.JournalIndexViewModel
 @{
     ViewData["Title"] = "home";
@@ -7,38 +6,9 @@
 <div class="innerwidth">
     @foreach (var post in Model.Posts)
     {
-        <section>
-            <h3>
-                <a asp-route="journal" asp-route-slug="@post.Slug"
-                   asp-route-year="@post.Published?.Year">
-                    @post.Title
-                </a>
-            </h3>
-            <p>
-                Published
-                <time datetime="@post.Published?.ToString("O")">
-                    @post.Published?.ToString("D")
-                </time>
-            </p>
-            @* @if (post.Tags != null)
-            {
-                <p>[ @string.Join(", ", post.Tags) ]</p>
-            } *@
-            <p>
-                @{
-                    var postText = post.ToPlainText();
-                    var truncatedText = postText.Substring(0, Math.Min(postText.Length, 250));
-                }
-                @truncatedText...
-                <a asp-route="journal" asp-route-slug="@post.Slug"
-                   asp-route-year="@post.Published?.Year"
-                   class="readon">
-                    [ read on &rarr; ]
-                </a>
-            </p>
-        </section>
+        @await Html.PartialAsync("~/Views/Partials/Journal/PostPreview.cshtml", post)
         <br />
     }
 </div>
 
-@await Html.PartialAsync("Pagination", Model.Pagination)
+@await Html.PartialAsync("~/Views/Partials/Pagination.cshtml", Model.Pagination)
