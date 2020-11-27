@@ -121,7 +121,7 @@
         }
     </style>
     @await RenderSectionAsync("Styles", required: false)
-    @Html.Raw(JavaScriptSnippet.FullScript)
+    @await Html.PartialAsync("PanelbearTag")
 </head>
 
 <body>
