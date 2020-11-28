@@ -1,6 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# 
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aoraki.Web", "Aoraki.Web\Aoraki.Web.csproj", "{232DCB91-8675-410B-BE6C-1247B08C32DE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{769753B9-CA70-4E6F-ACD3-33C7604DF019}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aoraki.Web.Tests", "Tests\Aoraki.Web.Tests\Aoraki.Web.Tests.csproj", "{E512E560-8A70-468C-B5B8-7CBF5E09B65A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +17,12 @@ Global
 		{232DCB91-8675-410B-BE6C-1247B08C32DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{232DCB91-8675-410B-BE6C-1247B08C32DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{232DCB91-8675-410B-BE6C-1247B08C32DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E512E560-8A70-468C-B5B8-7CBF5E09B65A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E512E560-8A70-468C-B5B8-7CBF5E09B65A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E512E560-8A70-468C-B5B8-7CBF5E09B65A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E512E560-8A70-468C-B5B8-7CBF5E09B65A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E512E560-8A70-468C-B5B8-7CBF5E09B65A} = {769753B9-CA70-4E6F-ACD3-33C7604DF019}
 	EndGlobalSection
 EndGlobal
