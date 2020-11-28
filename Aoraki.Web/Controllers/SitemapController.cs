@@ -19,16 +19,19 @@ namespace Aoraki.Web.Controllers
         }
 
         [HttpGet("/sitemap.xml")]
+        [ResponseCache(Duration = 14400)]
         public IActionResult Index()
         {
             return new SitemapProvider(new BaseUrlProvider())
                 .CreateSitemapIndex(new SitemapIndexModel(new List<SitemapIndexNode>
                 {
                     new SitemapIndexNode(Url.Action("Pages", "Sitemap")),
+                    new SitemapIndexNode(Url.Action("Posts", "Sitemap")),
                 }));
         }
 
         [HttpGet("/sitemap-pages.xml")]
+        [ResponseCache(Duration = 14400)]
         public IActionResult Pages()
         {
             return new SitemapProvider(new BaseUrlProvider())
@@ -40,6 +43,7 @@ namespace Aoraki.Web.Controllers
         }
 
         [HttpGet("/sitemap-posts.xml")]
+        [ResponseCache(Duration = 14400)]
         public async Task<IActionResult> Posts()
         {
             return new SitemapProvider(new BaseUrlProvider())
