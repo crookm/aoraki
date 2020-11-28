@@ -1,2 +1,4 @@
 User-agent: *
 Disallow: /Home/Error*
+
+Sitemap: https://crookm.com/sitemap.xml
