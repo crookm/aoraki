@@ -4,7 +4,7 @@
 <section>
     <h3>
         <a asp-route="journal" asp-route-slug="@Model.Slug"
-            asp-route-year="@Model.Published?.Year">
+           asp-route-year="@Model.Published?.Year">
             @Model.Title
         </a>
     </h3>
@@ -25,8 +25,8 @@
         }
         @truncatedText...
         <a asp-route="journal" asp-route-slug="@Model.Slug"
-            asp-route-year="@Model.Published?.Year"
-            class="readon">
+           asp-route-year="@Model.Published?.Year"
+           class="readon">
             [ read on &rarr; ]
         </a>
     </p>
