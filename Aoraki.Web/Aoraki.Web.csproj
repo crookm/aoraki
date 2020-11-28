@@ -13,6 +13,7 @@
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.16.0" />
     <PackageReference Include="MongoDB.Driver" Version="2.11.4" />
     <PackageReference Include="Sentry.AspNetCore" Version="2.1.8" />
+    <PackageReference Include="SimpleMvcSitemap" Version="4.0.0" />
     <PackageReference Include="TimeZoneConverter" Version="3.3.0" />
   </ItemGroup>
   <ItemGroup>
