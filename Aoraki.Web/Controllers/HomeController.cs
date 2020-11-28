@@ -6,6 +6,18 @@ namespace Aoraki.Web.Controllers
 {
     public class HomeController : Controller
     {
+        [HttpGet("/humans.txt")]
+        public IActionResult HumansTxt()
+        {
+            return RedirectPermanent("/.well-known/humans.txt");
+        }
+
+        [HttpGet("/security.txt")]
+        public IActionResult SecurityTxt()
+        {
+            return RedirectPermanent("/.well-known/security.txt");
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

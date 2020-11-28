@@ -1,0 +1,25 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+Contact: mailto:mattlcrook@icloud.com
+Encryption: https://crookm.com/pubkey.txt
+Acknowledgments: https://crookm.com/hall-of-fame.txt
+Preferred-Languages: en
+Canonical: https://crookm.com/.well-known/security.txt
+Expires: Thu, 28 Nov 2022 12:34:56 +1200
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEg9RWPkTUU3Y182I601Ygv/4RQwQFAl/BpEcACgkQ01Ygv/4R
+QwT1VQ//W/11fmtj3SY01x1DwQTiz+Di+valC8wc/22G2Rtz3iyw6AGnWOpau0kS
+Biwl4V5GEWmM0iixBsk6SEj5uNYlVyWnnoV9zEp6Le/K2eN/HMYu3b3tmYFs2FCR
+bmYPShPLhLOfmejgXfRCs7lzEhpl8phzXcpyyHpwyQjoIQXUqzD3Xw7OUSsIth3Y
+5ZeWZfD1shC1+g7ojs1xG+UEuOFrsIvWd9fCeCrNsSqSMRRB0QuVFja+myYIGtp5
+ED83nCJRDS3gwQFJrwPlEDIVogSdfF9RqtX1MGakqtdSbF9Lo1k8984XkEUYu+wD
+ttePthkv04Tr6fZuRbgrsNN+N/BjAefeCA3QiXoLt3LJ46oPLABmskmVrIFNC06w
+HL/ypofEmIMv5dimzM0JLQjeHL9PIeV96BydWcltkOHJPfZJWBaL2msnVenTRKuO
+AlT4OTgJBwvhNImK3qDJ/Z2H85u9WRCEoDBR8pQUd6fxqkDMuEsLf/jc732Gr4Q6
+NPPRcfJivKgTGzwoqv5RDYAq8oh7OzoBg2Ve8GNaej2mnkYhgbeKuXgExXGNVF3g
+KxEXbb/scQek2cvDsuOzvXwf2HdkY1wWiWynNpPNTLie9CjPgSr6SsxeTh3twZxA
+mE2noP4LUUVGzdkBYyw4Bn+LsY4F27jjEyuV+aNJ9GRuSle+3G8=
+=SGTm
+-----END PGP SIGNATURE-----
