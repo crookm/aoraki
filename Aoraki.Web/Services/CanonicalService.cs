@@ -10,6 +10,7 @@ namespace Aoraki.Web.Services
     {
         public string HostName { get; set; }
 
+        public bool EnableHttps { get; set; }
         public bool EnableTrailingSlash { get; set; }
         public bool EnableLowerCase { get; set; }
 
@@ -21,7 +22,11 @@ namespace Aoraki.Web.Services
         public string CanonicaliseUrl(Uri uri)
         {
             var builder = new StringBuilder();
-            builder.Append($"{uri.Scheme}://");
+            if (EnableHttps)
+                builder.Append("https://");
+            else
+                builder.Append($"{uri.Scheme}://");
+
             builder.Append(HostName);
 
             if (!uri.IsDefaultPort)

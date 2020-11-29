@@ -36,6 +36,7 @@ namespace Aoraki.Web
                     HostName = "crookm.com",
                     EnableTrailingSlash = false,
                     EnableLowerCase = true,
+                    EnableHttps = true,
                 });
 
             services.AddIdentityMongoDbProvider<MongoUser>(options => {
