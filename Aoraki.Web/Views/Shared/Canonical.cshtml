@@ -1,0 +1,8 @@
+@using Aoraki.Web.Contracts
+@using Microsoft.AspNetCore.Http.Extensions
+@inject ICanonicalService canonicalService
+@{
+    var canonical = canonicalService.CanonicaliseUrl(
+        Context.Request.GetDisplayUrl());
+}
+<link rel="canonical" href="@canonical" />

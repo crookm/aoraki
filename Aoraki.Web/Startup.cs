@@ -29,7 +29,14 @@ namespace Aoraki.Web
 
             services.AddApplicationInsightsTelemetry();
 
-            services.AddSingleton<IJournalPostService, JournalPostService>();
+            services
+                .AddSingleton<IJournalPostService, JournalPostService>()
+                .AddSingleton<ICanonicalService>(new CanonicalService
+                {
+                    HostName = "crookm.com",
+                    EnableTrailingSlash = false,
+                    EnableLowerCase = true,
+                });
 
             services.AddIdentityMongoDbProvider<MongoUser>(options => {
                 options.ConnectionString = Configuration.GetSection(nameof(JournalSettings))["DbConnection"];
@@ -49,7 +56,7 @@ namespace Aoraki.Web
             });
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
