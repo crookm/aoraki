@@ -35,7 +35,7 @@ namespace Aoraki.Web.Controllers
             {
                 Title = title,
                 Slug = slug,
-                Tags = new string[] { },
+                Tags = Array.Empty<string>(),
                 Created = DateTime.UtcNow,
                 Published = null,
                 Lead = "",
