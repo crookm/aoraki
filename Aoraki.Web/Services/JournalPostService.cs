@@ -65,7 +65,7 @@ namespace Aoraki.Web.Services
             if (!allowUnpublished)
                 filter = filter.Where(PublishedPostsExpression);
             return await filter
-                .OrderByDescending(p => p.Published)
+                .OrderByDescending(post => post.Published)
                 .Skip(skip).Take(take)
                 .ToListAsync();
         }
@@ -80,8 +80,8 @@ namespace Aoraki.Web.Services
                     Title = post.Title,
                     Published = post.Published.Value
                 })
+                .OrderByDescending(post => post.Published)
                 .ToListAsync())
-                // .GroupBy(p => p.Published.Year, p => p)
                 .GroupBy(post => post.Published.Year)
                 .ToDictionary(post => post.Key, post => post.ToList());
         }
