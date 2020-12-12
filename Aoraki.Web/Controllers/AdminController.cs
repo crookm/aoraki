@@ -1,8 +1,7 @@
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Aoraki.Web.Contracts;
-using Aoraki.Web.Models;
+using Aoraki.Web.Data.Models;
 using Aoraki.Web.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -35,7 +34,6 @@ namespace Aoraki.Web.Controllers
             {
                 Title = title,
                 Slug = slug,
-                Tags = Array.Empty<string>(),
                 Created = DateTime.UtcNow,
                 Published = null,
                 Lead = "",
@@ -47,17 +45,16 @@ namespace Aoraki.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> EditPost(string id)
+        public async Task<IActionResult> EditPost(int id)
         {
             if (!User.Identity.IsAuthenticated) return RedirectToAction("Login", "Account");
-            if (string.IsNullOrEmpty(id)) return NotFound();
             var post = await _postService.GetPostByIdAsync(id, allowUnpublished: true);
             if (post == null) return NotFound();
 
             return View(new AdminEditPostViewModel
             {
                 IsPublished = post.Published.HasValue,
-                Tags = post.Tags == null ? string.Empty : string.Join(", ", post.Tags),
+                // Tags = post.Tags == null ? string.Empty : string.Join(", ", post.Tags),
                 Post = post
             });
         }
@@ -65,22 +62,21 @@ namespace Aoraki.Web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditPost(
-            string id,
+            int id,
             AdminEditPostViewModel model)
         {
             if (!User.Identity.IsAuthenticated) return RedirectToAction("Login", "Account");
-            if (string.IsNullOrEmpty(id)) return NotFound();
             if (ModelState.IsValid)
             {
                 var oldPost = await _postService.GetPostByIdAsync(id, allowUnpublished: true);
                 if (oldPost == null) return NotFound();
                 
                 // Tags
-                model.Post.Tags = model?.Tags
-                    ?.Split(',')
-                    ?.Select(tag => tag.Trim())
-                    ?.Where(tag => !string.IsNullOrEmpty(tag))
-                    ?.ToArray();
+                // model.Post.Tags = model?.Tags
+                //     ?.Split(',')
+                //     ?.Select(tag => tag.Trim())
+                //     ?.Where(tag => !string.IsNullOrEmpty(tag))
+                //     ?.ToArray();
 
                 // Publishing
                 model.Post.Published = oldPost.Published;
@@ -90,7 +86,7 @@ namespace Aoraki.Web.Controllers
                         model.Post.Published = DateTime.UtcNow;
                 }
 
-                await _postService.UpdatePostAsync(id, model.Post);
+                await _postService.UpdatePostAsync(model.Post);
                 _logger.LogInformation("Person updated post with id {0}", id);
             }
 

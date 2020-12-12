@@ -1,14 +1,12 @@
 using Aoraki.Web.Contracts;
-using Aoraki.Web.Models;
+using Aoraki.Web.Data.Context;
 using Aoraki.Web.Services;
-using AspNetCore.Identity.Mongo;
-using AspNetCore.Identity.Mongo.Model;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 
 namespace Aoraki.Web
 {
@@ -23,14 +21,10 @@ namespace Aoraki.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<JournalSettings>(Configuration.GetSection(nameof(JournalSettings)));
-            services.AddSingleton<IJournalSettings>(provider =>
-                provider.GetRequiredService<IOptions<JournalSettings>>().Value);
-
             services.AddApplicationInsightsTelemetry();
+            services.AddDbContext<AorakiDbContext>();
 
             services
-                .AddSingleton<IJournalPostService, JournalPostService>()
                 .AddSingleton<ICanonicalService>(new CanonicalService
                 {
                     HostName = "crookm.com",
@@ -39,12 +33,15 @@ namespace Aoraki.Web
                     EnableHttps = true,
                 });
 
-            services.AddIdentityMongoDbProvider<MongoUser>(options => {
-                options.ConnectionString = Configuration.GetSection(nameof(JournalSettings))["DbConnection"];
-                options.MigrationCollection = "_identity-migrations";
-                options.UsersCollection = "identity-users";
-                options.RolesCollection = "identity-roles";
-            });
+            services.AddScoped<IJournalPostService, JournalPostService>();
+
+            // services.AddIdentityMongoDbProvider<MongoUser>(options =>
+            // {
+            //     options.ConnectionString = Configuration.GetSection(nameof(JournalSettings))["DbConnection"];
+            //     options.MigrationCollection = "_identity-migrations";
+            //     options.UsersCollection = "identity-users";
+            //     options.RolesCollection = "identity-roles";
+            // });
 
             services.AddAntiforgery();
             services.AddResponseCaching();

@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/Aoraki.Web/bin/Debug/netcoreapp3.1/Aoraki.Web.dll",
+            "program": "${workspaceFolder}/Aoraki.Web/bin/Debug/net5.0/Aoraki.Web.dll",
             "args": [],
             "cwd": "${workspaceFolder}/Aoraki.Web",
             "stopAtEntry": false,

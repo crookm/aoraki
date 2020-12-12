@@ -1,3 +1,5 @@
+using Aoraki.Web.Data.Models;
+
 namespace Aoraki.Web.Models.ViewModels
 {
     public class AdminEditPostViewModel
