@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
-using AspNetCore.Identity.Mongo.Model;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -10,10 +9,10 @@ namespace Aoraki.Web.Controllers
     public class AccountController : Controller
     {
         private readonly ILogger<AccountController> _logger;
-        private readonly SignInManager<MongoUser> _signInManager;
-        private readonly UserManager<MongoUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public AccountController(ILogger<AccountController> logger, SignInManager<MongoUser> signInManager, UserManager<MongoUser> userManager)
+        public AccountController(ILogger<AccountController> logger, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
         {
             _logger = logger;
             _signInManager = signInManager;

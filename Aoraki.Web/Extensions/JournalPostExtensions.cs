@@ -1,4 +1,4 @@
-using Aoraki.Web.Models;
+using Aoraki.Web.Data.Models;
 using Markdig;
 
 namespace Aoraki.Web.Extensions

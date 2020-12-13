@@ -1,14 +1,15 @@
+using System;
 using Aoraki.Web.Contracts;
-using Aoraki.Web.Models;
+using Aoraki.Web.Data.Context;
 using Aoraki.Web.Services;
-using AspNetCore.Identity.Mongo;
-using AspNetCore.Identity.Mongo.Model;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 
 namespace Aoraki.Web
 {
@@ -23,14 +24,22 @@ namespace Aoraki.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<JournalSettings>(Configuration.GetSection(nameof(JournalSettings)));
-            services.AddSingleton<IJournalSettings>(provider =>
-                provider.GetRequiredService<IOptions<JournalSettings>>().Value);
-
             services.AddApplicationInsightsTelemetry();
+            services.AddDbContext<AorakiDbContext>();
+            services.AddDefaultIdentity<IdentityUser>()
+                .AddEntityFrameworkStores<AorakiDbContext>();
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                options.Cookie.SameSite = SameSiteMode.Strict;
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromHours(6);
+                options.LoginPath = "/account/login";
+                options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
+                options.SlidingExpiration = true;
+            });
 
             services
-                .AddSingleton<IJournalPostService, JournalPostService>()
                 .AddSingleton<ICanonicalService>(new CanonicalService
                 {
                     HostName = "crookm.com",
@@ -39,12 +48,7 @@ namespace Aoraki.Web
                     EnableHttps = true,
                 });
 
-            services.AddIdentityMongoDbProvider<MongoUser>(options => {
-                options.ConnectionString = Configuration.GetSection(nameof(JournalSettings))["DbConnection"];
-                options.MigrationCollection = "_identity-migrations";
-                options.UsersCollection = "identity-users";
-                options.RolesCollection = "identity-roles";
-            });
+            services.AddScoped<IJournalPostService, JournalPostService>();
 
             services.AddAntiforgery();
             services.AddResponseCaching();

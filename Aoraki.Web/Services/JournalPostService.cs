@@ -1,110 +1,89 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Aoraki.Web.Contracts;
+using Aoraki.Web.Data.Context;
+using Aoraki.Web.Data.Models;
 using Aoraki.Web.Models;
-using MongoDB.Bson;
-using MongoDB.Driver;
+using Microsoft.EntityFrameworkCore;
 
 namespace Aoraki.Web.Services
 {
     public class JournalPostService : IJournalPostService
     {
-        private readonly IJournalSettings _journalSettings;
-        private readonly IMongoCollection<JournalPost> _postCollection;
+        private readonly AorakiDbContext _db;
 
-        public JournalPostService(IJournalSettings journalSettings)
+        public JournalPostService(AorakiDbContext db)
         {
-            _journalSettings = journalSettings;
-
-            var client = new MongoClient(_journalSettings.DbConnection);
-            var database = client.GetDatabase(_journalSettings.DbName);
-            _postCollection = database.GetCollection<JournalPost>(_journalSettings.DbPostsCollection);
+            _db = db;
         }
 
-        public async Task<string> CreatePostAsync(JournalPost post)
-        {
-            var id = ObjectId.GenerateNewId().ToString();
-            await _postCollection.InsertOneAsync(new JournalPost
-            {
-                Id = id,
-                Title = post.Title,
-                Slug = post.Slug,
-                Tags = post.Tags,
-                Created = post.Created,
-                Published = post.Published,
-                Lead = post.Lead,
-                Content = post.Content
-            });
+        private readonly Expression<Func<JournalPost, bool>> PublishedPostsExpression =
+            post => post.Published != null && post.Published <= DateTime.UtcNow;
 
-            return id;
+        public async Task<int> CreatePostAsync(JournalPost post)
+        {
+            var inserted = _db.JournalPosts.Add(post);
+            await _db.SaveChangesAsync();
+            return inserted.Entity.Id;
         }
 
-        public async Task UpdatePostAsync(string id, JournalPost post)
+        public async Task UpdatePostAsync(JournalPost post)
         {
-            var filter = Builders<JournalPost>.Filter.Eq(p => p.Id, id);
-            var update = Builders<JournalPost>.Update
-                .Set(p => p.Title, post.Title)
-                .Set(p => p.Slug, post.Slug)
-                .Set(p => p.Tags, post.Tags)
-                .Set(p => p.Published, post.Published)
-                .Set(p => p.Lead, post.Lead)
-                .Set(p => p.Content, post.Content);
-            await _postCollection.UpdateOneAsync(filter, update);
+            _db.Update(post);
+            await _db.SaveChangesAsync();
         }
-        
+
         public async Task<int> GetTotalPostCountAsync()
         {
-            return (int) await _postCollection.CountDocumentsAsync(GetPublishedPostsFilter());
+            return await _db.JournalPosts
+                .AsQueryable()
+                .CountAsync(PublishedPostsExpression);
         }
 
-        public async Task<JournalPost> GetPostByIdAsync(string id, bool allowUnpublished = false)
+        public async Task<JournalPost> GetPostByIdAsync(int id, bool allowUnpublished = false)
         {
-            var filter = Builders<JournalPost>.Filter.Eq(p => p.Id, id);
+            var filter = _db.JournalPosts.Where(post => post.Id == id);
             if (!allowUnpublished)
-                filter &= GetPublishedPostsFilter();
-            return await _postCollection.Find(filter).FirstOrDefaultAsync();
+                filter = filter.Where(PublishedPostsExpression);
+            return await filter.FirstOrDefaultAsync();
         }
 
         public async Task<JournalPost> GetPostBySlugAsync(string slug, bool allowUnpublished = false)
         {
-            var filter = Builders<JournalPost>.Filter.Eq(p => p.Slug, slug);
+            var filter = _db.JournalPosts.Where(post => post.Slug == slug);
             if (!allowUnpublished)
-                filter &= GetPublishedPostsFilter();
-            return await _postCollection.Find(filter).FirstOrDefaultAsync();
+                filter = filter.Where(PublishedPostsExpression);
+            return await filter.FirstOrDefaultAsync();
         }
 
         public async Task<IEnumerable<JournalPost>> GetPostsAsync(int skip, int take, bool allowUnpublished = false)
         {
-            var filter = Builders<JournalPost>.Filter.Empty;
+            var filter = _db.JournalPosts.AsQueryable();
             if (!allowUnpublished)
-                filter &= GetPublishedPostsFilter();
-            return await _postCollection.Find(filter)
-                .SortByDescending(p => p.Published)
-                .Skip(skip).Limit(take)
+                filter = filter.Where(PublishedPostsExpression);
+            return await filter
+                .OrderByDescending(post => post.Published)
+                .Skip(skip).Take(take)
                 .ToListAsync();
         }
-        
+
         public async Task<Dictionary<int, List<JournalArchivePost>>> GetPostsArchiveAsync()
         {
-            return (await _postCollection.Find(GetPublishedPostsFilter())
-                .Project(p => new JournalArchivePost
+            return (await _db.JournalPosts
+                .Where(PublishedPostsExpression)
+                .Select(post => new JournalArchivePost
                 {
-                    Slug = p.Slug,
-                    Title = p.Title,
-                    Published = p.Published.Value
+                    Slug = post.Slug,
+                    Title = post.Title,
+                    Published = post.Published.Value
                 })
-                .SortByDescending(p => p.Published)
+                .OrderByDescending(post => post.Published)
                 .ToListAsync())
-                .GroupBy(p => p.Published.Year, p => p)
-                .ToDictionary(p => p.Key, p => p.ToList());
-        }
-
-        private static FilterDefinition<JournalPost> GetPublishedPostsFilter()
-        {
-            return Builders<JournalPost>.Filter
-                .Where(p => p.Published != null && p.Published <= DateTime.UtcNow);
+                .GroupBy(post => post.Published.Year)
+                .ToDictionary(post => post.Key, post => post.ToList());
         }
     }
 }
