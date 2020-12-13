@@ -8,17 +8,17 @@
     <_ContentIncludedByDefault Remove="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="AspNetCore.Identity.Mongo" Version="6.7.2" />
     <PackageReference Include="EFCore.NamingConventions" Version="5.0.0" />
     <PackageReference Include="Markdig" Version="0.22.0" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.16.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.1">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="5.0.0" />
-    <PackageReference Include="MongoDB.Driver" Version="2.11.4" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.Postgresql" Version="5.0.0" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.Postgresql.Design" Version="1.1.0" />
     <PackageReference Include="Sentry.AspNetCore" Version="2.1.8" />

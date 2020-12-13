@@ -1,9 +1,10 @@
 using Aoraki.Web.Data.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Aoraki.Web.Data.Context
 {
-    public partial class AorakiDbContext : DbContext
+    public partial class AorakiDbContext : IdentityDbContext
     {
         public AorakiDbContext() { }
         public AorakiDbContext(DbContextOptions<AorakiDbContext> options)
