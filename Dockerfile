@@ -5,7 +5,9 @@ FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /app
 
 COPY . ./
-RUN dotnet publish -c Release -o out
+RUN dotnet restore
+RUN dotnet publish --nologo -c Release -o out --no-restore
+RUN dotnet test --nologo -c Release --no-build
 
 # ---
 # RUNTIME
