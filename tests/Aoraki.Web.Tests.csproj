@@ -19,6 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Aoraki.Web\Aoraki.Web.csproj" />
+    <ProjectReference Include="..\src\Aoraki.Web.csproj" />
   </ItemGroup>
 </Project>
