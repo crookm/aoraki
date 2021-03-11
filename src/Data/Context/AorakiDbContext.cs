@@ -21,5 +21,6 @@ namespace Aoraki.Web.Data.Context
         }
 
         public DbSet<JournalPost> JournalPosts { get; set; }
+        public DbSet<BlogrollBlog> BlogrollBlogs { get; set; }
     }
 }
