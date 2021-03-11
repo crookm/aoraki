@@ -1,0 +1,17 @@
+@model BlogrollBlog
+
+<section>
+    <h3>
+        <a href="@Model.Url" rel="noopener" onclick="panelbear('track', 'blogroll.link-out.@Model.Id')">
+            @Model.Name
+        </a>
+    </h3>
+    <p>
+        Link added on
+        <time datetime="@Model.Created.ToString("O")">
+            @Model.Created.ToString("D")
+        </time>
+    </p>
+    <p>@Model.Description</p>
+
+</section>
