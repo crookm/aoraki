@@ -22,7 +22,6 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.Postgresql" Version="5.0.0" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.Postgresql.Design" Version="1.1.0" />
     <PackageReference Include="Sentry.AspNetCore" Version="2.1.8" />
-    <PackageReference Include="SimpleMvcSitemap" Version="4.0.0" />
-    <PackageReference Include="TimeZoneConverter" Version="3.3.0" />
+    <PackageReference Include="SimpleMvcSitemap" Version="4.0.1" />
   </ItemGroup>
 </Project>
