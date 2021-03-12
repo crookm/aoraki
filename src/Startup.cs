@@ -28,6 +28,14 @@ namespace Aoraki.Web
             services.AddDbContext<AorakiDbContext>();
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<AorakiDbContext>();
+
+            services.AddHsts(options =>
+            {
+                options.Preload = true;
+                options.IncludeSubDomains = true;
+                options.MaxAge = TimeSpan.FromDays(365);
+            });
+
             services.ConfigureApplicationCookie(options =>
             {
                 options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
@@ -66,7 +74,10 @@ namespace Aoraki.Web
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
             else
+            {
+                app.UseHsts();
                 app.UseExceptionHandler("/Home/Error");
+            }
 
             app.UseStatusCodePagesWithReExecute("/Home/Error/{0}");
             app.UseStaticFiles(new StaticFileOptions
