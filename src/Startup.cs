@@ -29,13 +29,6 @@ namespace Aoraki.Web
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<AorakiDbContext>();
 
-            services.AddHsts(options =>
-            {
-                options.Preload = true;
-                options.IncludeSubDomains = true;
-                options.MaxAge = TimeSpan.FromDays(365);
-            });
-
             services.ConfigureApplicationCookie(options =>
             {
                 options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
@@ -71,13 +64,27 @@ namespace Aoraki.Web
 
         public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            // Default headers
+            // - Things like HSTS are defined here instead of using the correct middleware because the prod execution
+            //      environment requires HTTP, which ASP.NET will not inject the HSTS header into.
+            app.Use(async (ctx, next) =>
+            {
+                ctx.Response.Headers.Add("x-frame-options", "SAMEORIGIN");
+                ctx.Response.Headers.Add("x-content-type-options", "nosniff");
+                ctx.Response.Headers.Add("referrer-policy", "strict-origin-when-cross-origin");
+                ctx.Response.Headers.Add("content-security-policy", "default-src 'self' 'unsafe-inline' *.crookm.com data:; script-src 'self' 'unsafe-inline' https://cdn.panelbear.com; img-src *");
+                ctx.Response.Headers.Add("permissions-policy", "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()");
+
+                if (env.IsProduction())
+                    ctx.Response.Headers.Add("strict-transport-security", "max-age=31536000; includeSubDomains; preload");
+
+                await next.Invoke();
+            });
+
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
             else
-            {
-                app.UseHsts();
                 app.UseExceptionHandler("/Home/Error");
-            }
 
             app.UseStatusCodePagesWithReExecute("/Home/Error/{0}");
             app.UseStaticFiles(new StaticFileOptions
