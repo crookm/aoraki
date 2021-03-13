@@ -90,7 +90,7 @@ namespace Aoraki.Web.Controllers
         }
 
         [HttpGet("/atom.xml")]
-        [ResponseCache(Duration = 43200)]
+        [ResponseCache(Duration = 14400)]
         public async Task<IActionResult> AtomFeed()
         {
             var feed = await SetupSyndicationFeed();
@@ -102,7 +102,7 @@ namespace Aoraki.Web.Controllers
         }
 
         [HttpGet("/rss.xml")]
-        [ResponseCache(Duration = 43200)]
+        [ResponseCache(Duration = 14400)]
         public async Task<IActionResult> RssFeed()
         {
             var feed = await SetupSyndicationFeed();
