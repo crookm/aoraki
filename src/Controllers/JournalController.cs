@@ -1,6 +1,10 @@
 using System;
+using System.ServiceModel.Syndication;
+using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using Aoraki.Web.Contracts;
+using Aoraki.Web.Data;
 using Aoraki.Web.Extensions;
 using Aoraki.Web.Models;
 using Aoraki.Web.Models.ViewModels;
@@ -12,10 +16,12 @@ namespace Aoraki.Web.Controllers
     {
         private const int PostsPerPage = 10;
 
+        private readonly ICanonicalService _canonical;
         private readonly IJournalPostService _postService;
 
-        public JournalController(IJournalPostService postService)
+        public JournalController(ICanonicalService canonical, IJournalPostService postService)
         {
+            _canonical = canonical;
             _postService = postService;
         }
 
@@ -53,9 +59,9 @@ namespace Aoraki.Web.Controllers
             return View(post);
         }
 
+        [HttpGet("journal/{year}/{slug}.txt")]
         [Produces("text/plain")]
         [ResponseCache(Duration = 604800)]
-        [Route("journal/{year}/{slug}.txt")]
         public async Task<IActionResult> ReadPlaintext(string slug)
         {
             var post = await _postService.GetPostBySlugAsync(slug);
@@ -63,9 +69,9 @@ namespace Aoraki.Web.Controllers
             return Ok(post.ToPlainText());
         }
 
+        [HttpGet("journal/{year}/{slug}.md")]
         [Produces("text/plain")]
         [ResponseCache(Duration = 604800)]
-        [Route("journal/{year}/{slug}.md")]
         public async Task<IActionResult> ReadMarkdown(string slug)
         {
             var post = await _postService.GetPostBySlugAsync(slug);
@@ -73,14 +79,54 @@ namespace Aoraki.Web.Controllers
             return Ok(post.Content);
         }
 
+        [HttpGet("journal/{year}/{slug}.json")]
         [Produces("application/json")]
         [ResponseCache(Duration = 604800)]
-        [Route("journal/{year}/{slug}.json")]
         public async Task<IActionResult> ReadJson(string slug)
         {
             var post = await _postService.GetPostBySlugAsync(slug);
             if (post == null) return NotFound();
             return Ok(post);
         }
+
+        [HttpGet("/atom.xml")]
+        [ResponseCache(Duration = 43200)]
+        public async Task<IActionResult> AtomFeed()
+        {
+            var feed = await SetupSyndicationFeed();
+            using var sw = new StringWriterWithEncoding(Encoding.UTF8);
+            using (var writer = XmlWriter.Create(sw, new XmlWriterSettings { Indent = true }))
+                feed.GetAtom10Formatter().WriteTo(writer);
+
+            return Content(sw.ToString(), "application/atom+xml", Encoding.UTF8);
+        }
+
+        [HttpGet("/feed.xml")]
+        [ResponseCache(Duration = 43200)]
+        public async Task<IActionResult> RssFeed()
+        {
+            var feed = await SetupSyndicationFeed();
+            using var sw = new StringWriterWithEncoding(Encoding.UTF8);
+            using (var writer = XmlWriter.Create(sw, new XmlWriterSettings { Indent = true }))
+                feed.GetRss20Formatter().WriteTo(writer);
+
+            return Content(sw.ToString(), "application/rss+xml", Encoding.UTF8);
+        }
+
+        #region Helpers
+
+        private async Task<SyndicationFeed> SetupSyndicationFeed()
+        {
+            // This ID must not change
+            var baseId = "uuid:b8787de3-c2eb-41bc-89ab-9c176300d44c";
+            var feedItems = await _postService.GetPostsFeedItemsAsync(Url, baseId);
+            var siteUri = new Uri(_canonical.CanonicaliseUrl(Url.Action("Index")));
+            return new SyndicationFeed("Matts Blog", string.Empty, siteUri, feedItems)
+            {
+                Id = baseId
+            };
+        }
+
+        #endregion
     }
 }

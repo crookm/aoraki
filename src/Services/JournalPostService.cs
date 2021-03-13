@@ -2,11 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.ServiceModel.Syndication;
 using System.Threading.Tasks;
 using Aoraki.Web.Contracts;
 using Aoraki.Web.Data.Context;
 using Aoraki.Web.Data.Models;
+using Aoraki.Web.Extensions;
 using Aoraki.Web.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Aoraki.Web.Services
@@ -14,10 +17,12 @@ namespace Aoraki.Web.Services
     public class JournalPostService : IJournalPostService
     {
         private readonly AorakiDbContext _db;
+        private readonly ICanonicalService _canonical;
 
-        public JournalPostService(AorakiDbContext db)
+        public JournalPostService(AorakiDbContext db, ICanonicalService canonical)
         {
             _db = db;
+            _canonical = canonical;
         }
 
         private readonly Expression<Func<JournalPost, bool>> PublishedPostsExpression =
@@ -84,6 +89,27 @@ namespace Aoraki.Web.Services
                 .ToListAsync())
                 .GroupBy(post => post.Published.Year)
                 .ToDictionary(post => post.Key, post => post.ToList());
+        }
+
+        public async Task<List<SyndicationItem>> GetPostsFeedItemsAsync(IUrlHelper urlHelper, string baseId, int? page = null)
+        {
+            return (await GetPostsAsync(0, int.MaxValue, allowUnpublished: false))
+                .Select(post =>
+                {
+                    var item = new SyndicationItem
+                    {
+                        Id = baseId + $";id={post.Id}",
+                        Title = new TextSyndicationContent(post.Title, TextSyndicationContentKind.Plaintext),
+                        Content = new TextSyndicationContent(post.ToHtml(), TextSyndicationContentKind.Html),
+                        PublishDate = new DateTimeOffset(post.Published.Value, TimeSpan.Zero),
+                        LastUpdatedTime = new DateTimeOffset(post.Published.Value, TimeSpan.Zero),
+                    };
+                    item.Links.Add(
+                        new SyndicationLink(
+                            new Uri(_canonical.CanonicaliseUrl(urlHelper.Action("Read", "Journal", new { year = post.Published?.Year, slug = post.Slug })))));
+                    return item;
+                })
+                .ToList();
         }
     }
 }

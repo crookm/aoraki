@@ -23,5 +23,6 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.Postgresql.Design" Version="1.1.0" />
     <PackageReference Include="Sentry.AspNetCore" Version="2.1.8" />
     <PackageReference Include="SimpleMvcSitemap" Version="4.0.1" />
+    <PackageReference Include="System.ServiceModel.Syndication" Version="5.0.0" />
   </ItemGroup>
 </Project>
