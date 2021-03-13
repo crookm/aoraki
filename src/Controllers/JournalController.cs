@@ -101,7 +101,7 @@ namespace Aoraki.Web.Controllers
             return Content(sw.ToString(), "application/atom+xml", Encoding.UTF8);
         }
 
-        [HttpGet("/feed.xml")]
+        [HttpGet("/rss.xml")]
         [ResponseCache(Duration = 43200)]
         public async Task<IActionResult> RssFeed()
         {

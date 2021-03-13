@@ -6,6 +6,13 @@
 <div class="innerwidth">
     <h1>Archive</h1>
 
+    <p>
+        @await Html.PartialAsync("~/Views/Shared/Icons/FeedIcon.cshtml", 12)
+        <a asp-action="AtomFeed">atom</a> /
+        <a asp-action="RssFeed">rss</a>
+    </p>
+    <br />
+
     @foreach (var (year, posts) in Model)
     {
         <h3>@year</h3>
