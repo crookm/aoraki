@@ -40,6 +40,7 @@ namespace Aoraki.Web.Controllers
                     new SitemapNode(Url.Action("Index", "Journal")) { ChangeFrequency = ChangeFrequency.Daily },
                     new SitemapNode(Url.Action("Archive", "Journal")) { ChangeFrequency = ChangeFrequency.Daily },
                     new SitemapNode(Url.Action("Index", "Blogroll")) { ChangeFrequency = ChangeFrequency.Weekly },
+                    new SitemapNode(Url.Action("Colophon", "Pages")) { ChangeFrequency = ChangeFrequency.Yearly },
                 }));
         }
 
