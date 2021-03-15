@@ -72,7 +72,7 @@ namespace Aoraki.Web
                 ctx.Response.Headers.Add("x-frame-options", "SAMEORIGIN");
                 ctx.Response.Headers.Add("x-content-type-options", "nosniff");
                 ctx.Response.Headers.Add("referrer-policy", "strict-origin-when-cross-origin");
-                ctx.Response.Headers.Add("content-security-policy", "default-src 'self' 'unsafe-inline' *.crookm.com *.panelbear.com data:; script-src 'self' 'unsafe-inline'; img-src *");
+                ctx.Response.Headers.Add("content-security-policy", "default-src 'self' 'unsafe-inline' *.crookm.com data:; script-src 'self' 'unsafe-inline' *.panelbear.com; img-src *");
                 ctx.Response.Headers.Add("permissions-policy", "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()");
 
                 if (env.IsProduction())
