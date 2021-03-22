@@ -52,7 +52,6 @@ namespace Aoraki.Web.Tests.Services
             };
 
             var result = service.CanonicaliseUrl(inputUrl);
-
             result.Should().Be(expected: inputUrl);
         }
 
@@ -79,7 +78,6 @@ namespace Aoraki.Web.Tests.Services
             };
 
             var result = service.CanonicaliseUrl(inputUrl);
-
             if (expectedPortRemoved)
                 result.Should().NotMatchRegex(@":\d+");
             else
@@ -102,7 +100,6 @@ namespace Aoraki.Web.Tests.Services
             };
 
             var result = service.CanonicaliseUrl(inputUrl);
-
             result.Should().Be(expectedResult);
         }
 
@@ -126,7 +123,21 @@ namespace Aoraki.Web.Tests.Services
             };
 
             var result = service.CanonicaliseUrl(inputUrl);
+            result.Should().Be(expectedResult);
+        }
+        
+        [Theory]
+        [InlineData("http://example.com", true, "https://example.com")]
+        [InlineData("http://example.com", false, "http://example.com")]
+        public void CanonicaliseUrl_ShouldChangeProtocolToMatchExpected(string inputUrl, bool enableHttps, string expectedResult)
+        {
+            var service = new CanonicalService
+            {
+                HostName = "example.com",
+                EnableHttps = enableHttps
+            };
 
+            var result = service.CanonicaliseUrl(inputUrl);
             result.Should().Be(expectedResult);
         }
 
@@ -144,7 +155,6 @@ namespace Aoraki.Web.Tests.Services
             };
 
             var result = service.CanonicaliseUrl(inputUrl);
-
             result.Should().Be(expectedResult);
         }
     }
