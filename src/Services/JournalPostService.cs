@@ -25,7 +25,7 @@ namespace Aoraki.Web.Services
             _canonical = canonical;
         }
 
-        private readonly Expression<Func<JournalPost, bool>> PublishedPostsExpression =
+        internal static readonly Expression<Func<JournalPost, bool>> PublishedPostsExpression =
             post => post.Published != null && post.Published <= DateTime.UtcNow;
 
         public async Task<int> CreatePostAsync(JournalPost post)
