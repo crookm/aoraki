@@ -94,8 +94,8 @@ namespace Aoraki.Web.Controllers
         public async Task<IActionResult> AtomFeed()
         {
             var feed = await SetupSyndicationFeed();
-            using var sw = new StringWriterWithEncoding(Encoding.UTF8);
-            using (var writer = XmlWriter.Create(sw, new XmlWriterSettings { Indent = true }))
+            await using var sw = new StringWriterWithEncoding(Encoding.UTF8);
+            await using (var writer = XmlWriter.Create(sw, new XmlWriterSettings { Indent = true }))
                 feed.GetAtom10Formatter().WriteTo(writer);
 
             return Content(sw.ToString(), "application/atom+xml", Encoding.UTF8);
@@ -106,8 +106,8 @@ namespace Aoraki.Web.Controllers
         public async Task<IActionResult> RssFeed()
         {
             var feed = await SetupSyndicationFeed();
-            using var sw = new StringWriterWithEncoding(Encoding.UTF8);
-            using (var writer = XmlWriter.Create(sw, new XmlWriterSettings { Indent = true }))
+            await using var sw = new StringWriterWithEncoding(Encoding.UTF8);
+            await using (var writer = XmlWriter.Create(sw, new XmlWriterSettings { Indent = true }))
                 feed.GetRss20Formatter().WriteTo(writer);
 
             return Content(sw.ToString(), "application/rss+xml", Encoding.UTF8);
@@ -118,7 +118,7 @@ namespace Aoraki.Web.Controllers
         private async Task<SyndicationFeed> SetupSyndicationFeed()
         {
             // This ID must not change
-            var baseId = "uuid:b8787de3-c2eb-41bc-89ab-9c176300d44c";
+            const string baseId = "uuid:b8787de3-c2eb-41bc-89ab-9c176300d44c";
             var feedItems = await _postService.GetPostsFeedItemsAsync(Url, baseId);
             var siteUri = new Uri(_canonical.CanonicaliseUrl(Url.Action("Index")));
             return new SyndicationFeed("Matts Blog", string.Empty, siteUri, feedItems)
