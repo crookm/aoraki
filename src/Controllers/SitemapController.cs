@@ -25,8 +25,8 @@ namespace Aoraki.Web.Controllers
             return new SitemapProvider(new BaseUrlProvider())
                 .CreateSitemapIndex(new SitemapIndexModel(new List<SitemapIndexNode>
                 {
-                    new SitemapIndexNode(Url.Action("Pages", "Sitemap")),
-                    new SitemapIndexNode(Url.Action("Posts", "Sitemap")),
+                    new(Url.Action("Pages", "Sitemap")),
+                    new(Url.Action("Posts", "Sitemap")),
                 }));
         }
 
@@ -37,10 +37,10 @@ namespace Aoraki.Web.Controllers
             return new SitemapProvider(new BaseUrlProvider())
                 .CreateSitemap(new SitemapModel(new List<SitemapNode>
                 {
-                    new SitemapNode(Url.Action("Index", "Journal")) { ChangeFrequency = ChangeFrequency.Daily },
-                    new SitemapNode(Url.Action("Archive", "Journal")) { ChangeFrequency = ChangeFrequency.Daily },
-                    new SitemapNode(Url.Action("Index", "Blogroll")) { ChangeFrequency = ChangeFrequency.Weekly },
-                    new SitemapNode(Url.Action("Colophon", "Pages")) { ChangeFrequency = ChangeFrequency.Yearly },
+                    new(Url.Action("Index", "Journal")) { ChangeFrequency = ChangeFrequency.Daily },
+                    new(Url.Action("Archive", "Journal")) { ChangeFrequency = ChangeFrequency.Daily },
+                    new(Url.Action("Index", "Blogroll")) { ChangeFrequency = ChangeFrequency.Weekly },
+                    new(Url.Action("Colophon", "Pages")) { ChangeFrequency = ChangeFrequency.Yearly },
                 }));
         }
 
@@ -64,6 +64,6 @@ namespace Aoraki.Web.Controllers
 
     internal class BaseUrlProvider : IBaseUrlProvider
     {
-        public Uri BaseUrl => new Uri("https://crookm.com");
+        public Uri BaseUrl => new("https://crookm.com");
     }
 }
