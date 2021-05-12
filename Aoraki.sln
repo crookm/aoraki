@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# 
+#
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aoraki.Web", "src\Aoraki.Web.csproj", "{025CA835-BE15-4F0F-9F77-F52611725069}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aoraki.Web.Tests", "tests\Aoraki.Web.Tests.csproj", "{5C76E1B3-E82B-489C-9237-1E1BCBD4E475}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{91A54660-8748-4DC9-A61D-6D76517996CC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{99BE215D-E8CF-4BC9-905B-40D0B33B3A6D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,5 +23,9 @@ Global
 		{5C76E1B3-E82B-489C-9237-1E1BCBD4E475}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C76E1B3-E82B-489C-9237-1E1BCBD4E475}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C76E1B3-E82B-489C-9237-1E1BCBD4E475}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{025CA835-BE15-4F0F-9F77-F52611725069} = {91A54660-8748-4DC9-A61D-6D76517996CC}
+		{5C76E1B3-E82B-489C-9237-1E1BCBD4E475} = {99BE215D-E8CF-4BC9-905B-40D0B33B3A6D}
 	EndGlobalSection
 EndGlobal
