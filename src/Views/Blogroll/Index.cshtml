@@ -1,4 +1,4 @@
-@model List<BlogrollBlog>
+@model BlogrollIndexViewModel
 @{
     ViewData["Title"] = "blogroll";
 }
@@ -11,9 +11,11 @@
     </p>
     <br />
 
-    @foreach (var blog in Model)
+    @foreach (var blog in Model.Blogs)
     {
         @await Html.PartialAsync("~/Views/Partials/Blogroll/RollEntry.cshtml", blog)
         <br />
     }
 </div>
+
+@await Html.PartialAsync("~/Views/Partials/Pagination.cshtml", Model.Pagination)

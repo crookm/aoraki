@@ -14,7 +14,7 @@ namespace Aoraki.Web.Controllers
 {
     public class JournalController : Controller
     {
-        private const int PostsPerPage = 10;
+        private const int EntriesPerPage = 10;
 
         private readonly ICanonicalService _canonical;
         private readonly IJournalPostService _postService;
@@ -29,14 +29,14 @@ namespace Aoraki.Web.Controllers
         public async Task<IActionResult> Index(int page = 1)
         {
             var totalPosts = await _postService.GetTotalPostCountAsync();
-            var totalPages = (int)Math.Ceiling((decimal)totalPosts / (decimal)PostsPerPage);
+            var totalPages = (int)Math.Ceiling((decimal)totalPosts / (decimal)EntriesPerPage);
 
             if (page < 1)
                 return RedirectToAction(nameof(Index), new { page = 1 });
             if (page > totalPages)
                 return RedirectToAction(nameof(Index), new { page = totalPages });
 
-            var posts = await _postService.GetPostsAsync((page - 1) * PostsPerPage, PostsPerPage);
+            var posts = await _postService.GetPostsAsync((page - 1) * EntriesPerPage, EntriesPerPage);
             return View(new JournalIndexViewModel
             {
                 Pagination = new Pagination { CurrentPage = page, TotalPages = totalPages },
