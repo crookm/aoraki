@@ -95,7 +95,7 @@ namespace Aoraki.Web.Controllers
         {
             var feed = await SetupSyndicationFeed();
             await using var sw = new StringWriterWithEncoding(Encoding.UTF8);
-            await using (var writer = XmlWriter.Create(sw, new XmlWriterSettings { Indent = true }))
+            await using (var writer = XmlWriter.Create(sw, new XmlWriterSettings { Indent = true, Async = true}))
                 feed.GetAtom10Formatter().WriteTo(writer);
 
             return Content(sw.ToString(), "application/atom+xml", Encoding.UTF8);
@@ -107,7 +107,7 @@ namespace Aoraki.Web.Controllers
         {
             var feed = await SetupSyndicationFeed();
             await using var sw = new StringWriterWithEncoding(Encoding.UTF8);
-            await using (var writer = XmlWriter.Create(sw, new XmlWriterSettings { Indent = true }))
+            await using (var writer = XmlWriter.Create(sw, new XmlWriterSettings { Indent = true, Async = true}))
                 feed.GetRss20Formatter().WriteTo(writer);
 
             return Content(sw.ToString(), "application/rss+xml", Encoding.UTF8);
