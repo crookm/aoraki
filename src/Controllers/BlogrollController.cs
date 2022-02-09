@@ -10,7 +10,7 @@ namespace Aoraki.Web.Controllers
 {
     public class BlogrollController : Controller
     {
-        private const int EntriesPerPage = 5;
+        internal const int EntriesPerPage = 5;
 
         private readonly IBlogrollService _blogrollService;
 
