@@ -1,15 +1,10 @@
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Aoraki.Web.Contracts;
 using Aoraki.Web.Models;
-using Aoraki.Web.Models.Entities;
 using Aoraki.Web.Models.ViewModels;
-using Aoraki.Web.Options;
-using Azure.Data.Tables;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace Aoraki.Web.Controllers
 {
@@ -17,21 +12,18 @@ namespace Aoraki.Web.Controllers
     {
         private const int EntriesPerPage = 5;
 
-        private readonly ILogger<BlogrollController> _logger;
-        private readonly TableClient _tableClient;
+        private readonly IBlogrollService _blogrollService;
 
-        public BlogrollController(ILogger<BlogrollController> logger, IOptions<StorageOptions> storageOptions)
+        public BlogrollController(IBlogrollService blogrollService)
         {
-            _logger = logger;
-            _tableClient = new TableClient(storageOptions.Value.AzureStorageConnectionString, "blogroll");
+            _blogrollService = blogrollService;
         }
 
         [ResponseCache(Duration = 86400, VaryByQueryKeys = new[] { "page" })]
         public async Task<IActionResult> Index(int page = 1, CancellationToken token = default)
         {
-            var query = _tableClient.QueryAsync<BlogrollBlog>(cancellationToken: token);
-            var blogs = await query.ToListAsync(token);
-            var totalPages = (int)Math.Ceiling((decimal)blogs.Count / EntriesPerPage);
+            var blogsCount = await _blogrollService.GetTotalEntryCountAsync(token);
+            var totalPages = (int)Math.Ceiling((decimal)blogsCount / EntriesPerPage);
 
             if (page < 1)
                 return RedirectToAction(nameof(Index), new { page = 1 });
@@ -41,9 +33,8 @@ namespace Aoraki.Web.Controllers
             return View(new BlogrollIndexViewModel
             {
                 Pagination = new Pagination { CurrentPage = page, TotalPages = totalPages },
-                Blogs = blogs
-                    .OrderByDescending(blog => blog.Timestamp)
-                    .Skip((page - 1) * EntriesPerPage).Take(EntriesPerPage)
+                Blogs = await _blogrollService.GetEntriesAsync(
+                    skip: (page - 1) * EntriesPerPage, take: EntriesPerPage, token)
             });
         }
     }

@@ -32,7 +32,10 @@ namespace Aoraki.Web
 
             services.Configure<StorageOptions>(Configuration);
 
-            services.AddSingleton<IBlogPostService, BlogPostService>();
+            services
+                .AddSingleton<IBlogPostService, BlogPostService>()
+                .AddSingleton<IBlogrollService, BlogrollService>()
+                .AddSingleton<IStorageFactory, StorageFactory>();
 
             services.AddAntiforgery();
             services.AddResponseCaching();

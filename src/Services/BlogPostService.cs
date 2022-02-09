@@ -8,12 +8,10 @@ using Aoraki.Web.Contracts;
 using Aoraki.Web.Extensions;
 using Aoraki.Web.Models;
 using Aoraki.Web.Models.Entities;
-using Aoraki.Web.Options;
 using Azure;
 using Azure.Data.Tables;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 
 namespace Aoraki.Web.Services
 {
@@ -22,21 +20,22 @@ namespace Aoraki.Web.Services
         private readonly ICanonicalService _canonical;
         private readonly TableClient _tableClient;
 
-        public BlogPostService(IOptions<StorageOptions> storageOptions, ICanonicalService canonical)
+        public BlogPostService(IStorageFactory storageFactory, ICanonicalService canonical)
         {
             _canonical = canonical;
-            _tableClient = new TableClient(storageOptions.Value.AzureStorageConnectionString, "blogposts");
+            _tableClient = storageFactory.GetTableClient("blogposts");
         }
 
-        public async Task<int> GetTotalPostCountAsync(CancellationToken token = default)
+        public async Task<int> GetTotalPostCountAsync(bool allowUnpublished = false, CancellationToken token = default)
         {
-            var query = _tableClient.QueryAsync<BlogPost>(post => post.Published <= DateTimeOffset.Now, null,
+            var query = _tableClient.QueryAsync<BlogPost>(
+                post => allowUnpublished || post.Published <= DateTimeOffset.Now, null,
                 new[] { nameof(BlogPost.Published) }, token);
 
             return await query.CountAsync(token);
         }
 
-        public async Task<BlogPost> GetPostBySlugAsync(string year, string slug, bool allowUnpublished = false,
+        public async Task<BlogPost?> GetPostBySlugAsync(string year, string slug, bool allowUnpublished = false,
             CancellationToken token = default)
         {
             try
