@@ -3,19 +3,16 @@ using System.Text;
 
 namespace Aoraki.Web;
 
+/// <summary>
+/// Used in the XML feed endpoints to configure a <see cref="StringWriter"/> with an encoding, as the XML writer does
+/// not allow this.
+/// </summary>
 public sealed class StringWriterWithEncoding : StringWriter
 {
-    private readonly Encoding encoding;
-
-    public StringWriterWithEncoding() { }
-
     public StringWriterWithEncoding(Encoding encoding)
     {
-        this.encoding = encoding;
+        Encoding = encoding;
     }
 
-    public override Encoding Encoding
-    {
-        get { return encoding; }
-    }
+    public override Encoding Encoding { get; }
 }
