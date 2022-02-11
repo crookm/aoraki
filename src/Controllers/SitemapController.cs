@@ -9,9 +9,9 @@ namespace Aoraki.Web.Controllers;
 
 public class SitemapController : Controller
 {
-    private readonly IBlogPostService _postService;
+    private readonly IJournalService _postService;
 
-    public SitemapController(IBlogPostService postService)
+    public SitemapController(IJournalService postService)
     {
         _postService = postService;
     }

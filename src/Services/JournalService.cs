@@ -15,12 +15,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Aoraki.Web.Services;
 
-public class BlogPostService : IBlogPostService
+public class JournalService : IJournalService
 {
     private readonly ICanonicalService _canonical;
     private readonly TableClient _tableClient;
 
-    public BlogPostService(IStorageFactory storageFactory, ICanonicalService canonical)
+    public JournalService(IStorageFactory storageFactory, ICanonicalService canonical)
     {
         _canonical = canonical;
         _tableClient = storageFactory.GetTableClient("blogposts");
@@ -79,26 +79,22 @@ public class BlogPostService : IBlogPostService
             .ToDictionary(post => post.Key, post => post.ToList());
     }
 
-    public async Task<List<SyndicationItem>> GetPostsFeedItemsAsync(IUrlHelper urlHelper, string baseId,
+    public async Task<IEnumerable<SyndicationItem>> GetPostsFeedItemsAsync(IUrlHelper urlHelper, string baseId,
         int? page = null, CancellationToken token = default)
     {
-        return (await GetPostsAsync(0, int.MaxValue, allowUnpublished: false, token))
-            .Select(post =>
+        var posts = await GetPostsAsync(0, int.MaxValue, token: token);
+        return posts.Select(post => new SyndicationItem
+        {
+            Id = baseId + $";id={post.PartitionKey}+{post.RowKey}",
+            Title = new TextSyndicationContent(post.Title, TextSyndicationContentKind.Plaintext),
+            Content = new TextSyndicationContent(post.ToHtml(), TextSyndicationContentKind.Html),
+            Links =
             {
-                var item = new SyndicationItem
-                {
-                    Id = baseId + $";id={post.PartitionKey}+{post.RowKey}",
-                    Title = new TextSyndicationContent(post.Title, TextSyndicationContentKind.Plaintext),
-                    Content = new TextSyndicationContent(post.ToHtml(), TextSyndicationContentKind.Html),
-                    PublishDate = post.Published ?? DateTimeOffset.MinValue,
-                    LastUpdatedTime = post.Published ?? DateTimeOffset.MinValue
-                };
-                item.Links.Add(
-                    new SyndicationLink(
-                        new Uri(_canonical.CanonicaliseUrl(urlHelper.Action("Read", "Journal",
-                            new { year = post.Published?.Year, slug = post.RowKey })))));
-                return item;
-            })
-            .ToList();
+                new SyndicationLink(new Uri(_canonical.CanonicaliseUrl(urlHelper.Action("Read", "Journal",
+                    new { year = post.Published?.Year, slug = post.RowKey })!)))
+            },
+            PublishDate = post.Published ?? DateTimeOffset.MinValue,
+            LastUpdatedTime = post.Published ?? DateTimeOffset.MinValue
+        });
     }
 }

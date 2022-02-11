@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Aoraki.Web.Contracts;
 
-public interface IBlogPostService
+public interface IJournalService
 {
     /// <summary>
     /// Get the total number of posts
@@ -56,6 +56,6 @@ public interface IBlogPostService
     /// <param name="page">The page of results to display</param>
     /// <param name="token">A cancellation token</param>
     /// <returns>A collection of blog posts in syndicated feed format</returns>
-    Task<List<SyndicationItem>> GetPostsFeedItemsAsync(IUrlHelper urlHelper, string baseId, int? page = null,
+    Task<IEnumerable<SyndicationItem>> GetPostsFeedItemsAsync(IUrlHelper urlHelper, string baseId, int? page = null,
         CancellationToken token = default);
 }

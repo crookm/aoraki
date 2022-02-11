@@ -36,7 +36,7 @@ public class Startup
             .Configure<StorageOptions>(Configuration.GetSection(StorageOptions.HierarchyName));
 
         services
-            .AddSingleton<IBlogPostService, BlogPostService>()
+            .AddSingleton<IJournalService, JournalService>()
             .AddSingleton<IBlogrollService, BlogrollService>()
             .AddSingleton<IStorageFactory, StorageFactory>();
 

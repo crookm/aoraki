@@ -14,19 +14,19 @@ namespace Aoraki.Web.Controllers;
 
 public class JournalController : Controller
 {
-    private const int EntriesPerPage = 10;
+    internal const int EntriesPerPage = 10;
 
-    private readonly IBlogPostService _postService;
+    private readonly IJournalService _journalService;
 
-    public JournalController(IBlogPostService postService)
+    public JournalController(IJournalService journalService)
     {
-        _postService = postService;
+        _journalService = journalService;
     }
 
     [ResponseCache(Duration = 14400, VaryByQueryKeys = new[] { "page" })]
-    public async Task<IActionResult> Index(int page = 1)
+    public async Task<IActionResult> Index(int page = 1, CancellationToken token = default)
     {
-        var totalPosts = await _postService.GetTotalPostCountAsync();
+        var totalPosts = await _journalService.GetTotalPostCountAsync(token: token);
         var totalPages = (int)Math.Ceiling((decimal)totalPosts / EntriesPerPage);
 
         if (page < 1)
@@ -34,22 +34,21 @@ public class JournalController : Controller
         if (page > totalPages)
             return RedirectToAction(nameof(Index), new { page = totalPages });
 
-        var posts = await _postService.GetPostsAsync((page - 1) * EntriesPerPage, EntriesPerPage);
         return View(new JournalIndexViewModel
         {
             Pagination = new Pagination { CurrentPage = page, TotalPages = totalPages },
-            Posts = posts
+            Posts = await _journalService.GetPostsAsync((page - 1) * EntriesPerPage, EntriesPerPage, token: token)
         });
     }
 
     [ResponseCache(Duration = 14400)]
     public async Task<IActionResult> Archive(CancellationToken token = default)
-        => View(await _postService.GetPostsArchiveAsync(token));
+        => View(await _journalService.GetPostsArchiveAsync(token));
 
     [ResponseCache(Duration = 604800)]
     public async Task<IActionResult> Read(string year, string slug, CancellationToken token = default)
     {
-        var post = await _postService.GetPostBySlugAsync(year, slug, false, token);
+        var post = await _journalService.GetPostBySlugAsync(year, slug, false, token);
         if (post == null) return NotFound();
         return View(post);
     }
@@ -59,7 +58,7 @@ public class JournalController : Controller
     [ResponseCache(Duration = 604800)]
     public async Task<IActionResult> ReadPlaintext(string year, string slug, CancellationToken token = default)
     {
-        var post = await _postService.GetPostBySlugAsync(year, slug, false, token);
+        var post = await _journalService.GetPostBySlugAsync(year, slug, false, token);
         if (post == null) return NotFound();
         return Ok(post.ToPlainText());
     }
@@ -69,7 +68,7 @@ public class JournalController : Controller
     [ResponseCache(Duration = 604800)]
     public async Task<IActionResult> ReadMarkdown(string year, string slug, CancellationToken token = default)
     {
-        var post = await _postService.GetPostBySlugAsync(year, slug, false, token);
+        var post = await _journalService.GetPostBySlugAsync(year, slug, false, token);
         if (post == null) return NotFound();
         return Ok(post.Content);
     }
@@ -79,9 +78,9 @@ public class JournalController : Controller
     [ResponseCache(Duration = 604800)]
     public async Task<IActionResult> ReadJson(string year, string slug, CancellationToken token = default)
     {
-        var post = await _postService.GetPostBySlugAsync(year, slug, false, token);
+        var post = await _journalService.GetPostBySlugAsync(year, slug, false, token);
         if (post == null) return NotFound();
-        return Ok(post);
+        return Json(post);
     }
 
     [HttpGet("/atom.xml")]
@@ -110,9 +109,9 @@ public class JournalController : Controller
 
     #region Helpers
 
-    private async Task<SyndicationFeed> SetupSyndicationFeed(CancellationToken token = default)
+    internal async Task<SyndicationFeed> SetupSyndicationFeed(CancellationToken token = default)
     {
-        var feedItems = await _postService.GetPostsFeedItemsAsync(Url, Constants.SiteFeedBaseId, token: token);
+        var feedItems = await _journalService.GetPostsFeedItemsAsync(Url, Constants.SiteFeedBaseId, token: token);
         return new SyndicationFeed(Constants.SiteTitle, string.Empty, new Uri(Constants.SiteBaseUrl), feedItems)
             { Id = Constants.SiteFeedBaseId };
     }

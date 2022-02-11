@@ -16,7 +16,7 @@ namespace Aoraki.Web.Tests.Controllers;
 
 public class BlogrollControllerTests
 {
-    private static BlogrollController ConstructBlogrollController(IBlogrollService blogrollService = null)
+    private static BlogrollController ConstructBlogrollController(IBlogrollService? blogrollService = null)
     {
         blogrollService ??= new Mock<IBlogrollService>().Object;
         return new BlogrollController(blogrollService);
