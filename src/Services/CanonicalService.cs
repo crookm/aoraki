@@ -4,62 +4,61 @@ using System.Text;
 using Aoraki.Web.Contracts;
 using Microsoft.AspNetCore.WebUtilities;
 
-namespace Aoraki.Web.Services
+namespace Aoraki.Web.Services;
+
+public class CanonicalService : ICanonicalService
 {
-    public class CanonicalService : ICanonicalService
+    public string HostName { get; set; }
+
+    public bool EnableHttps { get; set; }
+    public bool EnableTrailingSlash { get; set; }
+    public bool EnableLowerCase { get; set; }
+
+    public string CanonicaliseUrl(string url)
     {
-        public string HostName { get; set; }
+        return CanonicaliseUrl(new Uri(url));
+    }
 
-        public bool EnableHttps { get; set; }
-        public bool EnableTrailingSlash { get; set; }
-        public bool EnableLowerCase { get; set; }
+    public string CanonicaliseUrl(Uri uri)
+    {
+        var builder = new StringBuilder();
+        if (EnableHttps)
+            builder.Append("https://");
+        else
+            builder.Append($"{uri.Scheme}://");
 
-        public string CanonicaliseUrl(string url)
+        builder.Append(HostName);
+
+        if (!uri.IsDefaultPort)
+            builder.Append($":{uri.Port}");
+
+        // - Path
+        var newPath = uri.AbsolutePath.TrimEnd('/');
+        if (EnableLowerCase)
+            newPath = newPath.ToLowerInvariant();
+
+        if (EnableTrailingSlash)
+            newPath += '/';
+
+        builder.Append(newPath);
+
+        // - Query parameters
+        if (!string.IsNullOrEmpty(uri.Query))
         {
-            return CanonicaliseUrl(new Uri(url));
-        }
-
-        public string CanonicaliseUrl(Uri uri)
-        {
-            var builder = new StringBuilder();
-            if (EnableHttps)
-                builder.Append("https://");
-            else
-                builder.Append($"{uri.Scheme}://");
-
-            builder.Append(HostName);
-
-            if (!uri.IsDefaultPort)
-                builder.Append($":{uri.Port}");
-
-            // - Path
-            var newPath = uri.AbsolutePath.TrimEnd('/');
-            if (EnableLowerCase)
-                newPath = newPath.ToLowerInvariant();
-
-            if (EnableTrailingSlash)
-                newPath += '/';
-
-            builder.Append(newPath);
-
-            // - Query parameters
-            if (!string.IsNullOrEmpty(uri.Query))
+            var query = QueryHelpers.ParseQuery(uri.Query);
+            var newQuery = new List<string>();
+            foreach (var item in query)
             {
-                var query = QueryHelpers.ParseQuery(uri.Query);
-                var newQuery = new List<string>();
-                foreach (var item in query)
-                {
-                    var key = item.Key;
-                    if (EnableLowerCase) key = key.ToLowerInvariant();
+                var key = item.Key;
+                if (EnableLowerCase) key = key.ToLowerInvariant();
 
-                    newQuery.Add($"{key}={item.Value}");
-                }
-
-                builder.Append($"?{string.Join("&", newQuery)}");
+                newQuery.Add($"{key}={item.Value}");
             }
 
-            builder.Append(uri.Fragment);
-            return builder.ToString();
+            builder.Append($"?{string.Join("&", newQuery)}");
         }
+
+        builder.Append(uri.Fragment);
+        return builder.ToString();
     }
 }

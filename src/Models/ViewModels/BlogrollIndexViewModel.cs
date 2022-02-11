@@ -1,11 +1,10 @@
 using System.Collections.Generic;
 using Aoraki.Web.Models.Entities;
 
-namespace Aoraki.Web.Models.ViewModels
+namespace Aoraki.Web.Models.ViewModels;
+
+public class BlogrollIndexViewModel
 {
-    public class BlogrollIndexViewModel
-    {
-        public Pagination Pagination { get; set; }
-        public IEnumerable<BlogrollBlog> Blogs { get; set; }
-    }
+    public Pagination Pagination { get; set; }
+    public IEnumerable<BlogrollBlog> Blogs { get; set; }
 }
