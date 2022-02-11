@@ -6,7 +6,7 @@
 
 <article class="journal innerwidth">
     <h1 class="title">@Model.Title</h1>
-    <section class="frontmatter">
+    <div class="frontmatter">
         @if (!string.IsNullOrEmpty(Model.Lead))
         {
             <p class="lead">@Model.Lead</p>
@@ -14,13 +14,13 @@
 
         <p class="date">
             Published on
-            <datetime datetime="@Model.Published?.ToString("O")">
+            <time datetime="@Model.Published?.ToString("u")">
                 @Model.Published?.ToString("f")
-            </datetime>
+            </time>
         </p>
 
         <hr />
-    </section>
+    </div>
 
     @Html.Raw(Model.ToHtml())
 

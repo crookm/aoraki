@@ -19,7 +19,7 @@
         @foreach (var post in posts)
         {
             <p>
-                <time datetime="@post.Published.ToString("O")">
+                <time datetime="@post.Published.ToString("u")">
                     @post.Published.ToString("yyyy-MM-dd")
                 </time> /
                 <a asp-route="journal" asp-route-slug="@post.Slug"
