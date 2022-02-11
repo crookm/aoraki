@@ -8,14 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="HandheldFriendly" content="True">
 
-    <link rel="alternate" type="application/rss+xml" title="Matts Blog" href="/rss.xml" />
-    <link rel="alternate" type="application/atom+xml" title="Matts Blog" href="/atom.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Matts Blog" href="/rss.xml"/>
+    <link rel="alternate" type="application/atom+xml" title="Matts Blog" href="/atom.xml"/>
 
     <title>@ViewData["Title"] - matts blog</title>
 
     @await Html.PartialAsync("Canonical")
 
-    <style type="text/css">
+    <style>
         html,
         body {
             font-size: 14px;
@@ -135,32 +135,32 @@
 </head>
 
 <body>
-    <nav>
-        <div class="innerwidth">
-            <b><a asp-controller="Journal" asp-action="Index">matts blog</a></b> /
-            <a asp-controller="Blogroll" asp-action="Index">blogroll</a> /
-            <a asp-controller="Journal" asp-action="Archive">archive</a>
-        </div>
-        <hr />
-    </nav>
-
-    <main>
-        @RenderBody()
-    </main>
-
-    <div class="endmatter">
-        <div class="innerwidth">
-            <hr />
-            <p>
-                &copy; @DateTimeOffset.UtcNow.Year /
-                <a href="https://github.com/crookm" rel="noopener">github</a> /
-                <a href="https://twitter.com/mattlc_3" rel="noopener">twitter</a> /
-                mattlcrook@icloud.com (<a href="https://matt28052e.blob.core.windows.net/keys/pgp/Matthew%20Crook%20-%20D410%204AA5%20F6FF%201B6B.pub.asc?sv=2020-10-02&si=PubKeys-Web-17E392CC8ED&sr=b&sig=m9n1DeEWynkIrfwwxm7yu7A3ZE1kYPs4j6lQJOY%2BhUk%3D" rel="noopener">pgp</a>)
-            </p>
-        </div>
+<nav>
+    <div class="innerwidth">
+        <b><a asp-controller="Journal" asp-action="Index">matts blog</a></b> /
+        <a asp-controller="Blogroll" asp-action="Index">blogroll</a> /
+        <a asp-controller="Journal" asp-action="Archive">archive</a>
     </div>
+    <hr/>
+</nav>
 
-    @await RenderSectionAsync("Scripts", required: false)
+<main>
+    @RenderBody()
+</main>
+
+<div class="endmatter">
+    <div class="innerwidth">
+        <hr/>
+        <p>
+            &copy; @DateTimeOffset.UtcNow.Year /
+            <a href="https://github.com/crookm" rel="noopener">github</a> /
+            <a href="https://twitter.com/mattlc_3" rel="noopener">twitter</a> /
+            mattlcrook@icloud.com (<a href="/pubkey.txt">gpg</a>)
+        </p>
+    </div>
+</div>
+
+@await RenderSectionAsync("Scripts", required: false)
 </body>
 
 </html>

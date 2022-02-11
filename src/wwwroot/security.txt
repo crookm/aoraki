@@ -6,21 +6,12 @@ Encryption: https://crookm.com/pubkey.txt
 Acknowledgments: https://crookm.com/hall-of-fame.txt
 Preferred-Languages: en
 Canonical: https://crookm.com/security.txt
-Expires: Thu, 28 Nov 2022 12:34:56 +1200
+Expires: Sat, 11 Feb 2023 12:00:00 +1300
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCAAdFiEEg9RWPkTUU3Y182I601Ygv/4RQwQFAl/BxNwACgkQ01Ygv/4R
-QwRlxw/9H8Srqha2ekDNoZF8SWFJi+utL0ztsKefXdtlVb3RoBYhwvkghimTOaHy
-F1ZN9Wt5F3emEfartQqSAGndUSdZLjrOIfpMDe9H7/YQY/pXXRWoIurv6Vg+GiaA
-27qd7U6sRugV+vH9IhYnOoUlMJxgNps1xTpYvV4MGdENM8XC4M1DwlCkE6wtegqj
-lvz563sB+VPhHXM7CMvGLu1Si5A2GRtaciOkvHMKU3hVC4Nfm25Hb5tdBY/Vo4wG
-d4xOd6vToaOFObv2Ev+HUrLZGOtbU3Q99pNmDK8W4ZvxMtdPZ+SQfEh6kbYT0HNi
-NQufTT/4jPv1VBvfkVjKyWi3YcS4vmtMCVHY+4LIc8563OgkVFdje9Ufh6uIZiAR
-4uH8p6CijqAI8WpwMJdbWNPB7x53ffQrBy1LQel7dCoJhBH+WAZwmflGNqIWy8Di
-seTgBVzC5g1n0Q7ch4nepMjqi3Z6SU2/zRMt59tVJ00dsNCp7Kmg3rTB/yBuCnDZ
-Z7pt/VaIlO6TCI8ujPyeuMeo8IGXGfG8ViqlKQJbji0aSBmfW0HZfa0ysMFMBkw5
-7BCDKwXF8C/z4wJgmYOusuFGmaciaqVuowLV9xavIuT1oZW0AwVAP5MsgMcOpQQf
-KNg9xFepn/ovH6o6vE7oiU9C2uynJd0GrncBZx/l0ZB/pdsplME=
-=G+my
+iHUEARYIAB0WIQQuHXIR0kyLrtKo7u/UEEql9v8bawUCYgYYaQAKCRDUEEql9v8b
+a8lxAQDQrtiIWhBOqfuTSMaxogVN5jquGbsc05p+6fktx2XIJgEAh7Lof2ZWarSG
+jVgw91fpvLwqxVtsIlsSS5CUAIb9DQM=
+=6+o5
 -----END PGP SIGNATURE-----
