@@ -8,10 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="HandheldFriendly" content="True">
 
-    <link rel="alternate" type="application/rss+xml" title="Matts Blog" href="/rss.xml"/>
-    <link rel="alternate" type="application/atom+xml" title="Matts Blog" href="/atom.xml"/>
+    <link rel="alternate" type="application/rss+xml" title="@Constants.SiteTitle" href="/rss.xml"/>
+    <link rel="alternate" type="application/atom+xml" title="@Constants.SiteTitle" href="/atom.xml"/>
 
-    <title>@ViewData["Title"] - matts blog</title>
+    <title>@ViewData["Title"] - @Constants.SiteTitle.ToLower()</title>
 
     @await Html.PartialAsync("Canonical")
 
@@ -137,7 +137,7 @@
 <body>
 <nav>
     <div class="innerwidth">
-        <b><a asp-controller="Journal" asp-action="Index">matts blog</a></b> /
+        <b><a asp-controller="Journal" asp-action="Index">@Constants.SiteTitle.ToLower()</a></b> /
         <a asp-controller="Blogroll" asp-action="Index">blogroll</a> /
         <a asp-controller="Journal" asp-action="Archive">archive</a>
     </div>

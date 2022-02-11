@@ -44,9 +44,7 @@ public class JournalController : Controller
 
     [ResponseCache(Duration = 14400)]
     public async Task<IActionResult> Archive(CancellationToken token = default)
-    {
-        return View(await _postService.GetPostsArchiveAsync(token));
-    }
+        => View(await _postService.GetPostsArchiveAsync(token));
 
     [ResponseCache(Duration = 604800)]
     public async Task<IActionResult> Read(string year, string slug, CancellationToken token = default)
@@ -115,7 +113,7 @@ public class JournalController : Controller
     private async Task<SyndicationFeed> SetupSyndicationFeed(CancellationToken token = default)
     {
         var feedItems = await _postService.GetPostsFeedItemsAsync(Url, Constants.SiteFeedBaseId, token: token);
-        return new SyndicationFeed("Matts Blog", string.Empty, new Uri(Constants.SiteBaseUrl), feedItems)
+        return new SyndicationFeed(Constants.SiteTitle, string.Empty, new Uri(Constants.SiteBaseUrl), feedItems)
             { Id = Constants.SiteFeedBaseId };
     }
 
