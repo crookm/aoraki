@@ -16,12 +16,10 @@ public class JournalController : Controller
 {
     private const int EntriesPerPage = 10;
 
-    private readonly ICanonicalService _canonical;
     private readonly IBlogPostService _postService;
 
-    public JournalController(ICanonicalService canonical, IBlogPostService postService)
+    public JournalController(IBlogPostService postService)
     {
-        _canonical = canonical;
         _postService = postService;
     }
 
@@ -116,14 +114,9 @@ public class JournalController : Controller
 
     private async Task<SyndicationFeed> SetupSyndicationFeed(CancellationToken token = default)
     {
-        // This ID must not change
-        const string baseId = "uuid:b8787de3-c2eb-41bc-89ab-9c176300d44c";
-        var feedItems = await _postService.GetPostsFeedItemsAsync(Url, baseId, token: token);
-        var siteUri = new Uri(_canonical.CanonicaliseUrl(Url.Action("Index")));
-        return new SyndicationFeed("Matts Blog", string.Empty, siteUri, feedItems)
-        {
-            Id = baseId
-        };
+        var feedItems = await _postService.GetPostsFeedItemsAsync(Url, Constants.SiteFeedBaseId, token: token);
+        return new SyndicationFeed("Matts Blog", string.Empty, new Uri(Constants.SiteBaseUrl), feedItems)
+            { Id = Constants.SiteFeedBaseId };
     }
 
     #endregion
