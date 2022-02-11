@@ -14,5 +14,5 @@ public class StorageFactory : IStorageFactory
         _storageOptions = storageOptions.Value;
     }
 
-    public TableClient GetTableClient(string tableName) => new(_storageOptions.AzureStorageConnectionString, tableName);
+    public TableClient GetTableClient(string tableName) => new(_storageOptions.ConnectionString, tableName);
 }

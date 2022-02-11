@@ -24,13 +24,14 @@ namespace Aoraki.Web
             services
                 .AddSingleton<ICanonicalService>(new CanonicalService
                 {
-                    HostName = "crookm.com",
+                    HostName = Constants.SiteHostName,
                     EnableTrailingSlash = false,
                     EnableLowerCase = true,
                     EnableHttps = true,
                 });
 
-            services.Configure<StorageOptions>(Configuration);
+            services
+                .Configure<StorageOptions>(Configuration.GetSection(StorageOptions.HierarchyName));
 
             services
                 .AddSingleton<IBlogPostService, BlogPostService>()
@@ -59,10 +60,12 @@ namespace Aoraki.Web
                 ctx.Response.Headers.Add("x-content-type-options", "nosniff");
                 ctx.Response.Headers.Add("referrer-policy", "strict-origin-when-cross-origin");
                 // ctx.Response.Headers.Add("content-security-policy", "default-src 'self' 'unsafe-inline' *.crookm.com data:; script-src 'self' 'unsafe-inline' *.panelbear.com; img-src *");
-                ctx.Response.Headers.Add("permissions-policy", "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()");
+                ctx.Response.Headers.Add("permissions-policy",
+                    "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()");
 
                 if (env.IsProduction())
-                    ctx.Response.Headers.Add("strict-transport-security", "max-age=31536000; includeSubDomains; preload");
+                    ctx.Response.Headers.Add("strict-transport-security",
+                        "max-age=31536000; includeSubDomains; preload");
 
                 await next.Invoke();
             });

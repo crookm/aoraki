@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Aoraki.Web.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using SimpleMvcSitemap;
-using SimpleMvcSitemap.Routing;
 
 namespace Aoraki.Web.Controllers
 {
@@ -60,10 +58,5 @@ namespace Aoraki.Web.Controllers
                             })
                         .ToList()));
         }
-    }
-
-    internal class BaseUrlProvider : IBaseUrlProvider
-    {
-        public Uri BaseUrl => new("https://crookm.com");
     }
 }
