@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Aoraki.Web.Contracts;
 using Aoraki.Web.Options;
 using Aoraki.Web.Services;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace Aoraki.Web;
 
+[ExcludeFromCodeCoverage]
 public class Startup
 {
     public Startup(IConfiguration configuration)
@@ -59,7 +61,6 @@ public class Startup
             ctx.Response.Headers.Add("x-frame-options", "SAMEORIGIN");
             ctx.Response.Headers.Add("x-content-type-options", "nosniff");
             ctx.Response.Headers.Add("referrer-policy", "strict-origin-when-cross-origin");
-            // ctx.Response.Headers.Add("content-security-policy", "default-src 'self' 'unsafe-inline' *.crookm.com data:; script-src 'self' 'unsafe-inline' *.panelbear.com; img-src *");
             ctx.Response.Headers.Add("permissions-policy",
                 "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()");
 
