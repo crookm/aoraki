@@ -9,30 +9,27 @@ namespace Aoraki.Web.Controllers;
 
 public class SitemapController : Controller
 {
-    private readonly IJournalService _postService;
+    private readonly IJournalService _journalService;
 
-    public SitemapController(IJournalService postService)
+    public SitemapController(IJournalService journalService)
     {
-        _postService = postService;
+        _journalService = journalService;
     }
 
     [HttpGet("/sitemap.xml")]
     [ResponseCache(Duration = 14400)]
     public IActionResult Index()
-    {
-        return new SitemapProvider(new BaseUrlProvider())
+        => new SitemapProvider(new BaseUrlProvider())
             .CreateSitemapIndex(new SitemapIndexModel(new List<SitemapIndexNode>
             {
                 new(Url.Action("Pages", "Sitemap")),
                 new(Url.Action("Posts", "Sitemap")),
             }));
-    }
 
     [HttpGet("/sitemap-pages.xml")]
     [ResponseCache(Duration = 14400)]
     public IActionResult Pages()
-    {
-        return new SitemapProvider(new BaseUrlProvider())
+        => new SitemapProvider(new BaseUrlProvider())
             .CreateSitemap(new SitemapModel(new List<SitemapNode>
             {
                 new(Url.Action("Index", "Journal")) { ChangeFrequency = ChangeFrequency.Daily },
@@ -40,15 +37,13 @@ public class SitemapController : Controller
                 new(Url.Action("Index", "Blogroll")) { ChangeFrequency = ChangeFrequency.Weekly },
                 new(Url.Action("Colophon", "Pages")) { ChangeFrequency = ChangeFrequency.Yearly },
             }));
-    }
 
     [HttpGet("/sitemap-posts.xml")]
     [ResponseCache(Duration = 14400)]
     public async Task<IActionResult> Posts()
-    {
-        return new SitemapProvider(new BaseUrlProvider())
+        => new SitemapProvider(new BaseUrlProvider())
             .CreateSitemap(new SitemapModel(
-                (await _postService.GetPostsArchiveAsync())
+                (await _journalService.GetPostsArchiveAsync())
                 .SelectMany(posts => posts.Value)
                 .Select(post =>
                     new SitemapNode(
@@ -57,5 +52,4 @@ public class SitemapController : Controller
                         LastModificationDate = post.Published.UtcDateTime
                     })
                 .ToList()));
-    }
 }
