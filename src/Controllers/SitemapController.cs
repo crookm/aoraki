@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using Aoraki.Web.Contracts;
@@ -7,6 +8,7 @@ using SimpleMvcSitemap;
 
 namespace Aoraki.Web.Controllers;
 
+[ExcludeFromCodeCoverage] // Sitemap builder writes direct to response stream, not testable
 public class SitemapController : Controller
 {
     private readonly IJournalService _journalService;
