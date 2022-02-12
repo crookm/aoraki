@@ -68,7 +68,7 @@ public class JournalController : Controller
         });
     }
 
-    [ResponseCache(Duration = 604800)]
+    [ResponseCache(Duration = 43200)]
     public async Task<IActionResult> Read(string year, string slug, CancellationToken token = default)
     {
         var post = await _journalService.GetPostBySlugAsync(year, slug, false, token);
