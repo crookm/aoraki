@@ -17,7 +17,10 @@
         <p>You may have already reacted to this post. Reactions cannot be changed or removed.</p>
     }
 
-    <p>
-        <a asp-action="Read" asp-route-year="@Model.Year" asp-route-slug="@Model.Slug">&laquo; return</a>
-    </p>
+    @if (!string.IsNullOrWhiteSpace(Model.Year) && !string.IsNullOrWhiteSpace(Model.Slug))
+    {
+        <p>
+            <a asp-action="Read" asp-route-year="@Model.Year" asp-route-slug="@Model.Slug">&laquo; return</a>
+        </p>
+    }
 </div>

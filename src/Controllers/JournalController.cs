@@ -1,4 +1,6 @@
 using System;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.ServiceModel.Syndication;
 using System.Text;
 using System.Threading;
@@ -48,10 +50,16 @@ public class JournalController : Controller
         => View(await _journalService.GetPostsArchiveAsync(token));
 
     [ResponseCache(Duration = 0, NoStore = true)]
-    public async Task<IActionResult> React(string year, string slug, Reaction reaction,
+    public async Task<IActionResult> React([Required] string year, [Required] string slug, [Required] Reaction reaction,
         CancellationToken token = default)
     {
+        if (!ModelState.IsValid)
+            return View(new JournalReactViewModel { Success = false });
+
         var ip = Request.HttpContext.Connection.RemoteIpAddress?.ToString();
+        if (Request.Headers.TryGetValue("CF-CONNECTING-IP", out var cloudflareIp))
+            ip = cloudflareIp.First();
+
         return View(new JournalReactViewModel
         {
             Year = year,
