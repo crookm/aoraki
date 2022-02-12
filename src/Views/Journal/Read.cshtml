@@ -1,28 +1,44 @@
 @using Aoraki.Web.Extensions
-@model Aoraki.Web.Models.Entities.BlogPost
+@model JournalPostReadViewModel
 @{
-    ViewData["Title"] = Model.Title.ToLowerInvariant();
+    ViewData["Title"] = Model.Post.Title.ToLowerInvariant();
 }
 
-<article class="journal innerwidth">
-    <h1 class="title">@Model.Title</h1>
-    <div class="frontmatter">
-        @if (!string.IsNullOrEmpty(Model.Lead))
-        {
-            <p class="lead">@Model.Lead</p>
+<div class="innerwidth">
+    <article class="journal">
+        <h1 class="title">@Model.Post.Title</h1>
+        <div class="frontmatter">
+            @if (!string.IsNullOrEmpty(Model.Post.Lead))
+            {
+                <p class="lead">@Model.Post.Lead</p>
+            }
+
+            <p class="date">
+                Published on
+                <time datetime="@Model.Post.Published?.ToString("u")">
+                    @Model.Post.Published?.ToString("f")
+                </time>
+            </p>
+
+            <hr/>
+        </div>
+
+        @Html.Raw(Model.Post.ToHtml())
+
+        @await Html.PartialAsync("Icons/Bleb")
+    </article>
+
+    <hr/>
+
+    @await Html.PartialAsync("~/Views/Partials/Journal/PostReactions.cshtml", Model.Reactions)
+</div>
+
+@section Styles
+{
+    <style>
+        .reactions > span:not(:last-of-type):after {
+            content: " ";
+            margin-left: 12px;
         }
-
-        <p class="date">
-            Published on
-            <time datetime="@Model.Published?.ToString("u")">
-                @Model.Published?.ToString("f")
-            </time>
-        </p>
-
-        <hr />
-    </div>
-
-    @Html.Raw(Model.ToHtml())
-
-    @await Html.PartialAsync("Icons/Bleb")
-</article>
+    </style>
+}

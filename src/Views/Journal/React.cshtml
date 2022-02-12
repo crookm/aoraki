@@ -1,0 +1,23 @@
+@model JournalReactViewModel
+@{
+    ViewData["Title"] = "react";
+}
+
+<div class="innerwidth">
+    <h1>React</h1>
+
+    @if (Model.Success)
+    {
+        <h2>Successfully reacted to post.</h2>
+        <p>Your reaction has been applied to the post, it will be visible on the page shortly. Reactions cannot be changed or removed.</p>
+    }
+    else
+    {
+        <h2>Could not react to post.</h2>
+        <p>You may have already reacted to this post. Reactions cannot be changed or removed.</p>
+    }
+
+    <p>
+        <a asp-action="Read" asp-route-year="@Model.Year" asp-route-slug="@Model.Slug">&laquo; return</a>
+    </p>
+</div>

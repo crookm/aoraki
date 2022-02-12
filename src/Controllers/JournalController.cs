@@ -17,10 +17,12 @@ public class JournalController : Controller
     internal const int EntriesPerPage = 10;
 
     private readonly IJournalService _journalService;
+    private readonly IJournalReactionService _reactionService;
 
-    public JournalController(IJournalService journalService)
+    public JournalController(IJournalService journalService, IJournalReactionService reactionService)
     {
         _journalService = journalService;
+        _reactionService = reactionService;
     }
 
     [ResponseCache(Duration = 14400, VaryByQueryKeys = new[] { "page" })]
@@ -45,12 +47,37 @@ public class JournalController : Controller
     public async Task<IActionResult> Archive(CancellationToken token = default)
         => View(await _journalService.GetPostsArchiveAsync(token));
 
+    [ResponseCache(Duration = 0, NoStore = true)]
+    public async Task<IActionResult> React(string year, string slug, Reaction reaction,
+        CancellationToken token = default)
+    {
+        var ip = Request.HttpContext.Connection.RemoteIpAddress?.ToString();
+        return View(new JournalReactViewModel
+        {
+            Year = year,
+            Slug = slug,
+            Success = await _reactionService.PostReactionAsync(year, slug, ip ?? "unknown", reaction, token: token)
+        });
+    }
+
     [ResponseCache(Duration = 604800)]
     public async Task<IActionResult> Read(string year, string slug, CancellationToken token = default)
     {
         var post = await _journalService.GetPostBySlugAsync(year, slug, false, token);
         if (post == null) return NotFound();
-        return View(post);
+
+        var reactions = await _reactionService.GetReactionsAsync(post.PartitionKey, post.RowKey, token);
+
+        return View(new JournalPostReadViewModel
+        {
+            Post = post,
+            Reactions = new JournalPostReactionsViewModel
+            {
+                PostYear = post.PartitionKey,
+                PostSlug = post.RowKey,
+                Reactions = reactions
+            }
+        });
     }
 
     [HttpGet("journal/{year}/{slug}.txt")]

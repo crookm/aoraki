@@ -37,6 +37,7 @@ public class Startup
 
         services
             .AddSingleton<IJournalService, JournalService>()
+            .AddSingleton<IJournalReactionService, JournalReactionService>()
             .AddSingleton<IBlogrollService, BlogrollService>()
             .AddSingleton<IStorageFactory, StorageFactory>();
 

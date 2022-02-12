@@ -21,10 +21,12 @@ namespace Aoraki.Web.Tests.Controllers;
 
 public class JournalControllerTests
 {
-    private static JournalController ConstructController(IJournalService? journalService = null)
+    private static JournalController ConstructController(IJournalService? journalService = null,
+        IJournalReactionService? reactionService = null)
     {
         journalService ??= new Mock<IJournalService>().Object;
-        return new JournalController(journalService);
+        reactionService ??= new Mock<IJournalReactionService>().Object;
+        return new JournalController(journalService, reactionService);
     }
 
     [Theory]
@@ -134,8 +136,8 @@ public class JournalControllerTests
 
         var result = await controller.Read(year, slug, CancellationToken.None);
         var view = result.Should().BeOfType<ViewResult>().Subject;
-        view.Model.Should().BeOfType<BlogPost>()
-            .Which.Content.Should().Be("haha");
+        var model = view.Model.Should().BeOfType<JournalPostReadViewModel>().Subject;
+        model.Post.Content.Should().Be("haha");
 
         journalService.Verify(x => x.GetPostBySlugAsync(
                 year, slug, false, It.IsAny<CancellationToken>()),

@@ -1,0 +1,17 @@
+@model JournalPostReactionsViewModel
+
+<section>
+    <h4>Reactions</h4>
+
+    <p class="reactions">
+        @foreach (var reaction in Enum.GetValues<Reaction>())
+        {
+            <span>
+                (@(Model.Reactions?[reaction] ?? 0))
+                <a asp-controller="Journal" asp-action="React"
+                   asp-route-year="@Model.PostYear" asp-route-slug="@Model.PostSlug" asp-route-reaction="@reaction"
+                   rel="nofollow">@reaction.ToString().ToLowerInvariant()</a>
+            </span>
+        }
+    </p>
+</section>
