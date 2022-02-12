@@ -16,7 +16,7 @@ namespace Aoraki.Web.Tests.Controllers;
 
 public class BlogrollControllerTests
 {
-    private static BlogrollController ConstructBlogrollController(IBlogrollService? blogrollService = null)
+    private static BlogrollController ConstructController(IBlogrollService? blogrollService = null)
     {
         blogrollService ??= new Mock<IBlogrollService>().Object;
         return new BlogrollController(blogrollService);
@@ -32,7 +32,7 @@ public class BlogrollControllerTests
         blogrollService.Setup(x => x.GetTotalEntryCountAsync(It.IsAny<CancellationToken>()))
             .ReturnsAsync(BlogrollController.EntriesPerPage * 10);
 
-        var controller = ConstructBlogrollController(blogrollService.Object);
+        var controller = ConstructController(blogrollService.Object);
 
         var result = await controller.Index(page: requestedPage, CancellationToken.None);
         result.Should().BeOfType<RedirectToActionResult>()
@@ -49,7 +49,7 @@ public class BlogrollControllerTests
         blogrollService.Setup(x => x.GetTotalEntryCountAsync(It.IsAny<CancellationToken>()))
             .ReturnsAsync(BlogrollController.EntriesPerPage * totalPages);
 
-        var controller = ConstructBlogrollController(blogrollService.Object);
+        var controller = ConstructController(blogrollService.Object);
 
         var result = await controller.Index(page: requestedPage, CancellationToken.None);
         result.Should().BeOfType<RedirectToActionResult>()
@@ -79,7 +79,7 @@ public class BlogrollControllerTests
                 }
             });
 
-        var controller = ConstructBlogrollController(blogrollService.Object);
+        var controller = ConstructController(blogrollService.Object);
 
         var result = await controller.Index(currentPage, CancellationToken.None);
         var view = result.Should().BeOfType<ViewResult>().Subject;
