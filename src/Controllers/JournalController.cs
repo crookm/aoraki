@@ -49,7 +49,7 @@ public class JournalController : Controller
     public async Task<IActionResult> Archive(CancellationToken token = default)
         => View(await _journalService.GetPostsArchiveAsync(token));
 
-    [ResponseCache(Duration = 0, NoStore = true)]
+    [ResponseCache(Duration = 0, NoStore = true, Location = ResponseCacheLocation.None)]
     public async Task<IActionResult> React([Required] string year, [Required] string slug, [Required] Reaction reaction,
         CancellationToken token = default)
     {
