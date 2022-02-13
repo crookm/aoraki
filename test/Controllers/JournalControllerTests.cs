@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.ServiceModel.Syndication;
 using System.Text;
 using System.Threading;
@@ -13,6 +14,7 @@ using Aoraki.Web.Models;
 using Aoraki.Web.Models.Entities;
 using Aoraki.Web.Models.ViewModels;
 using FluentAssertions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
@@ -110,6 +112,41 @@ public class JournalControllerTests
         model[2020].First().Title.Should().Be("aaa");
 
         journalService.Verify(x => x.GetPostsArchiveAsync(It.IsAny<CancellationToken>()), Times.Once);
+    }
+
+    [Fact]
+    public async Task React_ShouldUseRemoteIp_WhenCloudflareClientIpHeaderUnavailable()
+    {
+        var reactionService = new Mock<IJournalReactionService>();
+        var controller = ConstructController(reactionService: reactionService.Object);
+
+        var context = new DefaultHttpContext();
+        context.Request.HttpContext.Connection.RemoteIpAddress = IPAddress.Parse("1.1.1.1");
+        controller.ControllerContext = new ControllerContext { HttpContext = context };
+
+        await controller.React("12", "21", Reaction.Like, CancellationToken.None);
+
+        reactionService.Verify(x => x.PostReactionAsync(
+                "12", "21", "1.1.1.1", Reaction.Like, It.IsAny<int>(), It.IsAny<CancellationToken>()),
+            Times.Once);
+    }
+
+    [Fact]
+    public async Task React_ShouldUseCloudflareClientIpHeader_WhenAvailable()
+    {
+        var reactionService = new Mock<IJournalReactionService>();
+        var controller = ConstructController(reactionService: reactionService.Object);
+
+        var context = new DefaultHttpContext();
+        context.Request.HttpContext.Connection.RemoteIpAddress = IPAddress.Parse("1.1.1.1");
+        context.Request.Headers.Add("CF-CONNECTING-IP", "1.0.0.1");
+        controller.ControllerContext = new ControllerContext { HttpContext = context };
+
+        await controller.React("12", "21", Reaction.Educational, CancellationToken.None);
+
+        reactionService.Verify(x => x.PostReactionAsync(
+                "12", "21", "1.0.0.1", Reaction.Educational, It.IsAny<int>(), It.IsAny<CancellationToken>()),
+            Times.Once);
     }
 
     [Fact]
