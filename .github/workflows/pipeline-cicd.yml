@@ -28,7 +28,7 @@ jobs:
       run: dotnet test --no-build -c Release --verbosity normal
       
     - name: Publish
-      run: dotnet publish --no-build src/Aoraki.Web.csproj -c Release -o aoraki
+      run: dotnet publish --no-build src/Aoraki.Web/Aoraki.Web.csproj -c Release -o aoraki
 
     - name: Upload artifact
       uses: actions/upload-artifact@v2.2.2

@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 #
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aoraki.Web", "src\Aoraki.Web.csproj", "{025CA835-BE15-4F0F-9F77-F52611725069}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aoraki.Web", "src\Aoraki.Web\Aoraki.Web.csproj", "{025CA835-BE15-4F0F-9F77-F52611725069}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aoraki.Web.Tests", "test\Aoraki.Web.Tests.csproj", "{5C76E1B3-E82B-489C-9237-1E1BCBD4E475}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aoraki.Web.Tests", "test\Aoraki.Web.Tests\Aoraki.Web.Tests.csproj", "{5C76E1B3-E82B-489C-9237-1E1BCBD4E475}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{91A54660-8748-4DC9-A61D-6D76517996CC}"
 EndProject
