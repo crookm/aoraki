@@ -1,4 +1,5 @@
 User-agent: *
 Disallow: /Home/Error*
+Disallow: /journal/react*
 
-Sitemap: https://crookm.com/sitemap.xml
+Sitemap: https://mattcrook.io/sitemap.xml
