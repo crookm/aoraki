@@ -1,7 +1,9 @@
+using System;
 using System.Diagnostics.CodeAnalysis;
 using Aoraki.Web.Contracts;
 using Aoraki.Web.Options;
 using Azure.Data.Tables;
+using Azure.Identity;
 using Microsoft.Extensions.Options;
 
 namespace Aoraki.Web.Services;
@@ -16,5 +18,7 @@ public class StorageFactory : IStorageFactory
         _storageOptions = storageOptions.Value;
     }
 
-    public TableClient GetTableClient(string tableName) => new(_storageOptions.ConnectionString, tableName);
+    public TableClient GetTableClient(string tableName) => new(
+        new Uri($"https://{_storageOptions.AccountName}.table.core.windows.net/"),
+        tableName, new DefaultAzureCredential());
 }
