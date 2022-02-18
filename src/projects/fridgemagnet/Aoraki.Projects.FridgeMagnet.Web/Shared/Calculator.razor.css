@@ -1,0 +1,22 @@
+input, textarea {
+    display: block;
+    width: 100%;
+}
+
+label {
+    font-weight: bold;
+}
+
+label > p {
+    font-weight: normal;
+}
+
+.container {
+    display: flex;
+    gap: 10px;
+}
+
+.container label {
+    flex-basis: 0;
+    flex-grow: 1;
+}

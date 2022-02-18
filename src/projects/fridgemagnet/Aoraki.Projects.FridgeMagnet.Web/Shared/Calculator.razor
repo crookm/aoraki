@@ -1,0 +1,43 @@
+<fieldset>
+    <legend>alphabet config</legend>
+
+    <div class="container">
+        <label title="The number of magnets you have for each letter of the alphabet">
+            letter count
+            <p>
+                the number of magnets you have for each letter of the alphabet
+            </p>
+            <input type="number" min="1" value="@LetterCount"/>
+        </label>
+
+        <label title="The number of numeric magnets you have for each digit">
+            digit count
+            <p>
+                the number of numeric magnets you have for each digit
+            </p>
+            <input type="number" min="0" value="@DigitCount"/>
+        </label>
+    </div>
+</fieldset>
+
+<label>
+    your message
+    <textarea rows="3" @bind="Message"></textarea>
+</label>
+
+<button onclick="@Calculate">check</button>
+
+@code {
+
+    private int LetterCount { get; set; } = 4;
+    private int DigitCount { get; set; } = 2;
+    private string Message { get; set; } = string.Empty;
+
+    private void Calculate()
+    {
+        Console.WriteLine($"letters: {LetterCount}");
+        Console.WriteLine($"digits: {DigitCount}");
+        Console.WriteLine($"message: {Message}");
+    }
+
+}
