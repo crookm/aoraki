@@ -1,26 +1,23 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Microsoft.NET.Sdk.Web">
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <UserSecretsId>da9aa63d-d8c3-4638-b658-9894ce3b4d8f</UserSecretsId>
-    <Nullable>annotations</Nullable>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Azure.Data.Tables" Version="12.3.0" />
-    <PackageReference Include="Markdig" Version="0.26.0" />
-    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.20.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.2" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.0" />
-    <PackageReference Include="SimpleMvcSitemap" Version="4.0.1" />
-    <PackageReference Include="System.Linq.Async" Version="5.1.0" />
-    <PackageReference Include="System.ServiceModel.Syndication" Version="6.0.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="Views\Admin\EditPost.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Admin\Index.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Project\FridgeMagnet\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\projects\fridgemagnet\Aoraki.Projects.FridgeMagnet.Integration\Aoraki.Projects.FridgeMagnet.Integration.csproj" />
-  </ItemGroup>
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <UserSecretsId>da9aa63d-d8c3-4638-b658-9894ce3b4d8f</UserSecretsId>
+        <Nullable>annotations</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Azure.Data.Tables" Version="12.4.0"/>
+        <PackageReference Include="Azure.Identity" Version="1.5.0"/>
+        <PackageReference Include="Markdig" Version="0.27.0"/>
+        <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.20.0"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1"/>
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.2"/>
+        <PackageReference Include="SimpleMvcSitemap" Version="4.0.1"/>
+        <PackageReference Include="System.Linq.Async" Version="6.0.1"/>
+        <PackageReference Include="System.ServiceModel.Syndication" Version="6.0.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\projects\fridgemagnet\Aoraki.Projects.FridgeMagnet.Integration\Aoraki.Projects.FridgeMagnet.Integration.csproj"/>
+    </ItemGroup>
 </Project>

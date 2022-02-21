@@ -2,16 +2,17 @@
 Hash: SHA256
 
 Contact: mailto:mattlcrook@icloud.com
-Encryption: https://crookm.com/pubkey.txt
-Acknowledgments: https://crookm.com/hall-of-fame.txt
+Encryption: https://mattcrook.io/pubkey.txt
+Acknowledgments: https://mattcrook.io/hall-of-fame.txt
 Preferred-Languages: en
-Canonical: https://crookm.com/security.txt
+Canonical: https://mattcrook.io/security.txt
 Expires: Sat, 11 Feb 2023 12:00:00 +1300
 
 -----BEGIN PGP SIGNATURE-----
 
-iHUEARYIAB0WIQQuHXIR0kyLrtKo7u/UEEql9v8bawUCYgYYaQAKCRDUEEql9v8b
-a8lxAQDQrtiIWhBOqfuTSMaxogVN5jquGbsc05p+6fktx2XIJgEAh7Lof2ZWarSG
-jVgw91fpvLwqxVtsIlsSS5CUAIb9DQM=
-=6+o5
+iHUEARYIAB0WIQQuHXIR0kyLrtKo7u/UEEql9v8bawUCYg9bugAKCRDUEEql9v8b
+a8N1AQCZ2kJ7paesoxemPVpgMSemDdllo/ZbFU1H0108i7R+QwEA+jmKSNsl/1Lp
+vAcpYDtUqBQ8zkl9KMfNoOGTlvyhfQE=
+=R7si
 -----END PGP SIGNATURE-----
+

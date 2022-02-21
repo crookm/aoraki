@@ -9,3 +9,4 @@
 	Development: JetBrains Rider, Linux Mint
 	Runtime: ASP.NET 6
 	Hosting: Azure App Service for Linux
+

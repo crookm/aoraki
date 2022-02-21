@@ -43,7 +43,7 @@ jobs:
     
     environment:
       name: PROD
-      url: ${{ steps.deployapp.outputs.webapp-url }}
+      url: https://mattcrook.io
       
     steps:
     - name: Download artifact
@@ -58,7 +58,6 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
         
     - name: Deploy app
-      id: deployapp
       uses: azure/webapps-deploy@v2
       with:
         app-name: aoraki-8acf69
