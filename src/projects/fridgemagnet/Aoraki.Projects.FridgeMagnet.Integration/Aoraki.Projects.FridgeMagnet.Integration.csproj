@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
@@ -10,5 +9,4 @@
       <ProjectReference Include="..\..\..\Aoraki.Contracts\Aoraki.Contracts.csproj" />
       <ProjectReference Include="..\Aoraki.Projects.FridgeMagnet.Web\Aoraki.Projects.FridgeMagnet.Web.csproj" />
     </ItemGroup>
-
 </Project>
