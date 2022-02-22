@@ -32,14 +32,28 @@ label > p {
 }
 
 .results {
-    background: #2d2d2d;
+    background: #eee;
     padding: 1px 14px;
 }
 
 .results.success {
-    border-left: 4px solid #067506
+    border-left: 4px solid #05b005;
 }
 
 .results.error {
-    border-left: 4px solid #8a0707;
+    border-left: 4px solid #d70303;
+}
+
+@media (prefers-color-scheme: dark) {
+    .results {
+        background: #2d2d2d;
+    }
+
+    .results.success {
+        border-left: 4px solid #067506;
+    }
+
+    .results.error {
+        border-left: 4px solid #8a0707;
+    }
 }

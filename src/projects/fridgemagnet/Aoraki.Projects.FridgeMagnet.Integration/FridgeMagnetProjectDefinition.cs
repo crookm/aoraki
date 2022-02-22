@@ -14,7 +14,7 @@ public class FridgeMagnetProjectDefinition : IProjectDefinition
 
     public string StyleSheetUri => "Aoraki.Projects.FridgeMagnet.Web.styles.css";
     public DateTimeOffset StartedProject => new(2022, 02, 18, 6, 40, 0, TimeSpan.FromHours(13));
-    public DateTimeOffset UpdatedProject => new(2022, 02, 23, 8, 30, 0, TimeSpan.FromHours(13));
+    public DateTimeOffset UpdatedProject => new(2022, 02, 23, 8, 56, 0, TimeSpan.FromHours(13));
     public DateTimeOffset? CompletedProject => new(2022, 02, 23, 8, 30, 0, TimeSpan.FromHours(13));
     public Type EntryComponent => typeof(Index);
 }
