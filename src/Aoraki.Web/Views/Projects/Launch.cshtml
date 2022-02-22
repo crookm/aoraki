@@ -1,0 +1,23 @@
+@model Aoraki.Contracts.Projects.IProjectDefinition
+
+<div class="innerwidth">
+    <component type="Model.EntryComponent" render-mode="WebAssemblyPrerendered"/>
+</div>
+
+@section Meta
+{
+    <base href="/"/>
+}
+
+@section Styles
+{
+    @if (!string.IsNullOrWhiteSpace(Model.StyleSheetUri))
+    {
+        <link href="@Model.StyleSheetUri" asp-append-version="true" rel="stylesheet"/>
+    }
+}
+
+@section Scripts
+{
+    <script src="_framework/blazor.webassembly.js"></script>
+}

@@ -1,0 +1,45 @@
+input, textarea {
+    display: block;
+    width: calc(100% - 8px);
+}
+
+fieldset {
+    margin-bottom: 8px;
+}
+
+label {
+    font-weight: bold;
+}
+
+label > p {
+    font-weight: normal;
+}
+
+.container {
+    display: flex;
+    gap: 8px;
+}
+
+.container label {
+    flex-basis: 0;
+    flex-grow: 1;
+}
+
+.button-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin: 8px 0;
+}
+
+.results {
+    background: #2d2d2d;
+    padding: 1px 14px;
+}
+
+.results.success {
+    border-left: 4px solid #067506
+}
+
+.results.error {
+    border-left: 4px solid #8a0707;
+}

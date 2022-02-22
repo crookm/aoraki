@@ -1,0 +1,70 @@
+@using Aoraki.Projects.FridgeMagnet.Web.Extensions
+<fieldset>
+    <legend>alphabet config</legend>
+
+    <div class="container">
+        <label title="The number of magnets you have for each letter of the alphabet">
+            count of each letter
+            <input type="number" min="1" value="@LetterCount"/>
+        </label>
+
+        <label title="The number of numeric magnets you have for each digit">
+            count of each digit
+            <input type="number" min="0" value="@DigitCount"/>
+        </label>
+    </div>
+</fieldset>
+
+<label>
+    your message
+    <textarea rows="3" @bind="Message"></textarea>
+</label>
+
+<div class="button-wrapper">
+    <button onclick="@Calculate">check</button>
+</div>
+
+@if (Results != null)
+{
+    if (Results.Any())
+    {
+        <div class="results error">
+            <p>You don't have enough magnets to write this message!</p>
+            <p>Missing the following:</p>
+            <ul>
+                @foreach (var (letter, count) in Results)
+                {
+                    <li><b>@char.ToUpperInvariant(letter) </b> (need @count)</li>
+                }
+            </ul>
+        </div>
+    }
+    else
+    {
+        <div class="results success">
+            <p>You have enough magnets to write this message :)</p>
+        </div>
+    }
+}
+
+@code {
+
+    private int LetterCount { get; set; } = 4;
+    private int DigitCount { get; set; } = 2;
+    private string Message { get; set; } = string.Empty;
+
+    private Dictionary<char, int>? Results { get; set; }
+
+    private void Calculate()
+    {
+        var message = Message.ToLowerInvariant();
+        var letterCounts = message.Where(char.IsLetter).CountChars();
+        var digitCounts = message.Where(char.IsDigit).CountChars();
+
+        Results = letterCounts.Where(c => c.Value > LetterCount)
+            .Concat(digitCounts.Where(c => c.Value > DigitCount))
+            .OrderBy(c => c.Key)
+            .ToDictionary(c => c.Key, c => c.Value);
+    }
+
+}

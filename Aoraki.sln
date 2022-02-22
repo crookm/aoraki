@@ -14,6 +14,16 @@ ProjectSection(SolutionItems) = preProject
 	.github\workflows\pipeline-cicd.yml = .github\workflows\pipeline-cicd.yml
 EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "projects", "projects", "{AB1E9BC1-D0A5-40FB-AEEF-E782B9C28CD9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fridgemagnet", "fridgemagnet", "{88710008-FD72-4A7E-A7BC-B47BC0D83AC0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aoraki.Projects.FridgeMagnet.Web", "src\projects\fridgemagnet\Aoraki.Projects.FridgeMagnet.Web\Aoraki.Projects.FridgeMagnet.Web.csproj", "{03724612-F59D-465A-90D2-2E66AB17C00A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aoraki.Projects.FridgeMagnet.Integration", "src\projects\fridgemagnet\Aoraki.Projects.FridgeMagnet.Integration\Aoraki.Projects.FridgeMagnet.Integration.csproj", "{F9E1A1E4-5997-4989-8391-274B6E075A1B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aoraki.Contracts", "src\Aoraki.Contracts\Aoraki.Contracts.csproj", "{DC4AF617-D275-43BE-8D20-3D0B8C6D77E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,9 +38,26 @@ Global
 		{5C76E1B3-E82B-489C-9237-1E1BCBD4E475}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C76E1B3-E82B-489C-9237-1E1BCBD4E475}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C76E1B3-E82B-489C-9237-1E1BCBD4E475}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03724612-F59D-465A-90D2-2E66AB17C00A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03724612-F59D-465A-90D2-2E66AB17C00A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03724612-F59D-465A-90D2-2E66AB17C00A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03724612-F59D-465A-90D2-2E66AB17C00A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9E1A1E4-5997-4989-8391-274B6E075A1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9E1A1E4-5997-4989-8391-274B6E075A1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9E1A1E4-5997-4989-8391-274B6E075A1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9E1A1E4-5997-4989-8391-274B6E075A1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC4AF617-D275-43BE-8D20-3D0B8C6D77E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC4AF617-D275-43BE-8D20-3D0B8C6D77E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC4AF617-D275-43BE-8D20-3D0B8C6D77E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC4AF617-D275-43BE-8D20-3D0B8C6D77E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{025CA835-BE15-4F0F-9F77-F52611725069} = {91A54660-8748-4DC9-A61D-6D76517996CC}
 		{5C76E1B3-E82B-489C-9237-1E1BCBD4E475} = {99BE215D-E8CF-4BC9-905B-40D0B33B3A6D}
+		{AB1E9BC1-D0A5-40FB-AEEF-E782B9C28CD9} = {91A54660-8748-4DC9-A61D-6D76517996CC}
+		{88710008-FD72-4A7E-A7BC-B47BC0D83AC0} = {AB1E9BC1-D0A5-40FB-AEEF-E782B9C28CD9}
+		{03724612-F59D-465A-90D2-2E66AB17C00A} = {88710008-FD72-4A7E-A7BC-B47BC0D83AC0}
+		{F9E1A1E4-5997-4989-8391-274B6E075A1B} = {88710008-FD72-4A7E-A7BC-B47BC0D83AC0}
+		{DC4AF617-D275-43BE-8D20-3D0B8C6D77E7} = {91A54660-8748-4DC9-A61D-6D76517996CC}
 	EndGlobalSection
 EndGlobal

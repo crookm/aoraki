@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Aoraki.Projects.FridgeMagnet.Integration;
 using Aoraki.Web.Contracts;
 using Aoraki.Web.Options;
 using Aoraki.Web.Services;
@@ -41,6 +42,8 @@ public class Startup
             .AddSingleton<IBlogrollService, BlogrollService>()
             .AddSingleton<IStorageFactory, StorageFactory>();
 
+        services.SetupFridgeMagnetProject();
+
         services.AddAntiforgery();
         services.AddResponseCaching();
         services.AddControllersWithViews();
@@ -77,6 +80,7 @@ public class Startup
         else
             app.UseExceptionHandler("/Home/Error");
 
+        app.UseBlazorFrameworkFiles();
         app.UseStatusCodePagesWithReExecute("/Home/Error/{0}");
         app.UseStaticFiles(new StaticFileOptions
         {
