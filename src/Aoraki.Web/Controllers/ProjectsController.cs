@@ -16,6 +16,9 @@ public class ProjectsController : Controller
         _projectDefinitions = projectDefinitions;
     }
 
+    public IActionResult Index()
+        => View(_projectDefinitions.OrderByDescending(p => p.UpdatedProject).ToList());
+
     [Route("{projectId}")]
     public IActionResult Launch(string projectId)
     {

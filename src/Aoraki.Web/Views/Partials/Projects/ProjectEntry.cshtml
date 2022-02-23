@@ -1,0 +1,13 @@
+@model IProjectDefinition
+
+<section>
+    <h3>
+        <a asp-action="Launch" asp-route-projectId="@Model.Id">
+            @Model.DisplayName
+        </a>
+    </h3>
+    <p>
+        Updated <time datetime="@Model.UpdatedProject.ToString("u")">@Model.UpdatedProject.ToString("D")</time>
+    </p>
+    <p class="description">@Model.Description</p>
+</section>

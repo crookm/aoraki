@@ -9,7 +9,7 @@ public class FridgeMagnetProjectDefinition : IProjectDefinition
     public string DisplayName => "Fridge Magnet";
 
     public string Description =>
-        "A small project to calculate if you can write a message using alphabet fridge magnets.\n" +
+        "A small project to calculate if you can write a message using alphabet fridge magnets.\n\n" +
         "Intended as a test project for implementing Blazor components into existing ASP.NET MVC projects.";
 
     public string StyleSheetUri => "Aoraki.Projects.FridgeMagnet.Web.styles.css";

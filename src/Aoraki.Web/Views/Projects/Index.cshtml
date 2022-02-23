@@ -1,0 +1,29 @@
+@model IEnumerable<IProjectDefinition>
+
+@{
+    ViewData["Title"] = "projects";
+}
+
+<div class="innerwidth">
+    <h2>Projects</h2>
+    <p class="lead">
+        Listed here are some of the projects I have worked on and host on this site.
+        They are all silly, most are intended as sandboxes to test technologies.
+    </p>
+    <br/>
+
+    @foreach (var projectDefinition in Model)
+    {
+        <partial name="~/Views/Partials/Projects/ProjectEntry.cshtml" model="projectDefinition"/>
+        <br/>
+    }
+</div>
+
+@section Styles
+{
+    <style>
+        .description {
+            white-space: pre-line;
+        }
+    </style>
+}
