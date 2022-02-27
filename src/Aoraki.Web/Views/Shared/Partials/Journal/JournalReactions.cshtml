@@ -8,8 +8,8 @@
         {
             <span>
                 (@(Model.Reactions?[reaction] ?? 0))
-                <a asp-controller="Journal" asp-action="React"
-                   asp-route-year="@Model.PostYear" asp-route-slug="@Model.PostSlug" asp-route-reaction="@reaction"
+                <a asp-controller="Journal" asp-action="React" asp-route-year="@Model.PostYear"
+                   asp-route-slug="@Model.PostSlug" asp-route-reaction="@reaction"
                    rel="nofollow">@reaction.ToString().ToLowerInvariant()</a>
             </span>
         }

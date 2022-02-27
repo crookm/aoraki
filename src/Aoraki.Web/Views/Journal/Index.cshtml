@@ -6,9 +6,9 @@
 <div class="innerwidth">
     @foreach (var post in Model.Posts)
     {
-        @await Html.PartialAsync("~/Views/Partials/Journal/PostPreview.cshtml", post)
-        <br />
+        <partial name="Partials/Journal/JournalEntryPreview" model="post"/>
+        <br/>
     }
 </div>
 
-@await Html.PartialAsync("~/Views/Partials/Pagination.cshtml", Model.Pagination)
+<partial name="Partials/Pagination" model="Model.Pagination"/>

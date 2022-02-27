@@ -25,12 +25,12 @@
 
         @Html.Raw(Model.Post.ToHtml())
 
-        @await Html.PartialAsync("Icons/Bleb")
+        <partial name="Icons/Bleb"/>
     </article>
 
     <hr/>
 
-    @await Html.PartialAsync("~/Views/Partials/Journal/PostReactions.cshtml", Model.Reactions)
+    <partial name="Partials/Journal/JournalReactions" model="Model.Reactions"/>
 </div>
 
 @section Styles

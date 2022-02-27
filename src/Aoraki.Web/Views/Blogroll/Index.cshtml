@@ -9,13 +9,13 @@
         The following are some blogs from writers that I like, which I regularly update.
         Maybe you'll like them too, check them out!
     </p>
-    <br />
+    <br/>
 
     @foreach (var blog in Model.Blogs)
     {
-        @await Html.PartialAsync("~/Views/Partials/Blogroll/RollEntry.cshtml", blog)
-        <br />
+        <partial name="Partials/Blogroll/BlogrollEntry" model="blog"/>
+        <br/>
     }
 </div>
 
-@await Html.PartialAsync("~/Views/Partials/Pagination.cshtml", Model.Pagination)
+<partial name="Partials/Pagination" model="Model.Pagination"/>
