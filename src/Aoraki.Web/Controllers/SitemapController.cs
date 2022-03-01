@@ -37,6 +37,7 @@ public class SitemapController : Controller
                 new(Url.Action("Index", "Journal")) { ChangeFrequency = ChangeFrequency.Daily },
                 new(Url.Action("Archive", "Journal")) { ChangeFrequency = ChangeFrequency.Daily },
                 new(Url.Action("Index", "Blogroll")) { ChangeFrequency = ChangeFrequency.Weekly },
+                new(Url.Action("Index", "Projects")) { ChangeFrequency = ChangeFrequency.Weekly },
                 new(Url.Action("Colophon", "Pages")) { ChangeFrequency = ChangeFrequency.Yearly },
             }));
 
