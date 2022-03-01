@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Aoraki.Projects.FridgeMagnet.Integration;
 using Aoraki.Web.Contracts;
+using Aoraki.Web.Middleware;
 using Aoraki.Web.Options;
 using Aoraki.Web.Services;
 using Microsoft.AspNetCore.Builder;
@@ -57,23 +58,9 @@ public class Startup
 
     public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
-        // Default headers
-        // - Things like HSTS are defined here instead of using the correct middleware because the prod execution
-        //      environment requires HTTP, which ASP.NET will not inject the HSTS header into.
-        app.Use(async (ctx, next) =>
-        {
-            ctx.Response.Headers.Add("x-frame-options", "SAMEORIGIN");
-            ctx.Response.Headers.Add("x-content-type-options", "nosniff");
-            ctx.Response.Headers.Add("referrer-policy", "strict-origin-when-cross-origin");
-            ctx.Response.Headers.Add("permissions-policy",
-                "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()");
-
-            if (env.IsProduction())
-                ctx.Response.Headers.Add("strict-transport-security",
-                    "max-age=31536000; includeSubDomains; preload");
-
-            await next.Invoke();
-        });
+        app
+            .UseMiddleware<SecurityHeaderMiddleware>()
+            .UseMiddleware<DomainRedirectionMiddleware>();
 
         if (env.IsDevelopment())
             app.UseDeveloperExceptionPage();
