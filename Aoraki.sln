@@ -12,6 +12,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution items", "solution items", "{C1DD775C-A750-401F-AFCA-597D5101317B}"
 ProjectSection(SolutionItems) = preProject
 	.github\workflows\pipeline-cicd.yml = .github\workflows\pipeline-cicd.yml
+	README.md = README.md
 EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "projects", "projects", "{AB1E9BC1-D0A5-40FB-AEEF-E782B9C28CD9}"
