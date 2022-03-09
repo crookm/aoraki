@@ -23,7 +23,7 @@ public class JournalService : IJournalService
     public JournalService(IStorageFactory storageFactory, ICanonicalService canonical)
     {
         _canonical = canonical;
-        _tableClient = storageFactory.GetTableClient("blogposts");
+        _tableClient = storageFactory.GetTableClient(Constants.TableNameBlogPosts);
     }
 
     public async Task<int> GetTotalPostCountAsync(bool allowUnpublished = false, CancellationToken token = default)

@@ -20,8 +20,8 @@ public class JournalReactionService : IJournalReactionService
     public JournalReactionService(IStorageFactory storageFactory, IJournalService journalService)
     {
         _journalService = journalService;
-        _reactTableClient = storageFactory.GetTableClient("blogreact");
-        _reactAuditTableClient = storageFactory.GetTableClient("blogreactaudit");
+        _reactTableClient = storageFactory.GetTableClient(Constants.TableNameBlogReact);
+        _reactAuditTableClient = storageFactory.GetTableClient(Constants.TableNameBlogReactAudit);
     }
 
     public async Task<bool> PostReactionAsync(string year, string slug, string ipAddress, Reaction reaction,
@@ -55,13 +55,14 @@ public class JournalReactionService : IJournalReactionService
         }
         catch (RequestFailedException e) when (e.Status == StatusCodes.Status412PreconditionFailed)
         {
-            // The row been modified after it had been loaded
-            if (attempts > 3) return false;
+            // The row was modified after it had been loaded
+            // - Re-attempt three times at most
+            if (attempts >= 3) return false;
             return await PostReactionAsync(year, slug, ipAddress, reaction, attempts, token);
         }
         catch (RequestFailedException e) when (e.Status == StatusCodes.Status404NotFound)
         {
-            // There is not yet a record of reactions for this post
+            // There is not yet a record of reactions for this post, create one
             await _reactTableClient.AddEntityAsync(new BlogPostReactions
             {
                 PartitionKey = year,
