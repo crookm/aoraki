@@ -52,7 +52,7 @@ jobs:
 
       - name: SonarCloud begin analysis
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # For PR info, if needed
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # For PR info, if needed
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: ./.sonar/scanner/dotnet-sonarscanner begin /k:"crookm_aoraki" /o:"crookm" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
 
@@ -64,6 +64,7 @@ jobs:
 
       - name: SonarCloud end analysis
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
 
