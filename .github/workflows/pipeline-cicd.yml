@@ -60,7 +60,7 @@ jobs:
         run: dotnet build --no-restore -c Release
 
       - name: Test
-        run: dotnet dotcover test --no-build -c Release --verbosity normal
+        run: dotnet dotcover test --no-build -c Release --verbosity normal --dcReportType=HTML
 
       - name: SonarCloud end analysis
         env:

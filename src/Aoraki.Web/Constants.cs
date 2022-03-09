@@ -1,5 +1,8 @@
 namespace Aoraki.Web;
 
+// Disable hardcoded URI warning
+#pragma warning disable S1075
+
 public static class Constants
 {
     public const string SiteBaseUrl = "https://mattcrook.io";

@@ -2,6 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Aoraki.Web.Controllers;
 
+// Disable hardcoded URI warning
+#pragma warning disable S1075
+
 public class RedirectController : Controller
 {
     // Still active, but different url
