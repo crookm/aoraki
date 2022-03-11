@@ -69,7 +69,7 @@ jobs:
         run: ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
 
       - name: Publish
-        run: dotnet publish --no-build src/Aoraki.Web/Aoraki.Web.csproj -c Release -o aoraki
+        run: dotnet publish src/Aoraki.Web/Aoraki.Web.csproj -c Release -o aoraki
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2.2.2
