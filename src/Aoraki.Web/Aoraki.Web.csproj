@@ -6,9 +6,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Azure.Data.Tables" Version="12.4.0" />
+        <PackageReference Include="Azure.Data.Tables" Version="12.5.0" />
         <PackageReference Include="Azure.Identity" Version="1.5.0" />
-        <PackageReference Include="Markdig" Version="0.27.0" />
+        <PackageReference Include="Markdig" Version="0.28.0" />
         <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.20.0" />
         <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.3" />
