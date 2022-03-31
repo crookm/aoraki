@@ -27,7 +27,7 @@ public class JournalController : Controller
         _reactionService = reactionService;
     }
 
-    [ResponseCache(Duration = 14400, VaryByQueryKeys = new[] { "page" })]
+    [ResponseCache(Duration = Constants.CacheDurationJournalIndex, VaryByQueryKeys = new[] { "page" })]
     public async Task<IActionResult> Index(int page = 1, CancellationToken token = default)
     {
         var totalPosts = await _journalService.GetTotalPostCountAsync(token: token);
@@ -45,7 +45,7 @@ public class JournalController : Controller
         });
     }
 
-    [ResponseCache(Duration = 14400)]
+    [ResponseCache(Duration = Constants.CacheDurationJournalArchive)]
     public async Task<IActionResult> Archive(CancellationToken token = default)
         => View(await _journalService.GetPostsArchiveAsync(token));
 
@@ -68,7 +68,7 @@ public class JournalController : Controller
         });
     }
 
-    [ResponseCache(Duration = 43200)]
+    [ResponseCache(Duration = Constants.CacheDurationJournalEntry)]
     public async Task<IActionResult> Read(string year, string slug, CancellationToken token = default)
     {
         var post = await _journalService.GetPostBySlugAsync(year, slug, false, token);
@@ -90,7 +90,7 @@ public class JournalController : Controller
 
     [HttpGet("journal/{year}/{slug}.txt")]
     [Produces("text/plain")]
-    [ResponseCache(Duration = 604800)]
+    [ResponseCache(Duration = Constants.CacheDurationJournalEntryApi)]
     public async Task<IActionResult> ReadPlaintext(string year, string slug, CancellationToken token = default)
     {
         var post = await _journalService.GetPostBySlugAsync(year, slug, false, token);
@@ -100,7 +100,7 @@ public class JournalController : Controller
 
     [HttpGet("journal/{year}/{slug}.md")]
     [Produces("text/plain")]
-    [ResponseCache(Duration = 604800)]
+    [ResponseCache(Duration = Constants.CacheDurationJournalEntryApi)]
     public async Task<IActionResult> ReadMarkdown(string year, string slug, CancellationToken token = default)
     {
         var post = await _journalService.GetPostBySlugAsync(year, slug, false, token);
@@ -110,7 +110,7 @@ public class JournalController : Controller
 
     [HttpGet("journal/{year}/{slug}.json")]
     [Produces("application/json")]
-    [ResponseCache(Duration = 604800)]
+    [ResponseCache(Duration = Constants.CacheDurationJournalEntryApi)]
     public async Task<IActionResult> ReadJson(string year, string slug, CancellationToken token = default)
     {
         var post = await _journalService.GetPostBySlugAsync(year, slug, false, token);
@@ -119,7 +119,7 @@ public class JournalController : Controller
     }
 
     [HttpGet("/atom.xml")]
-    [ResponseCache(Duration = 14400)]
+    [ResponseCache(Duration = Constants.CacheDurationJournalFeed)]
     public async Task<IActionResult> AtomFeed(CancellationToken token = default)
     {
         var feed = await SetupSyndicationFeed(token);
@@ -131,7 +131,7 @@ public class JournalController : Controller
     }
 
     [HttpGet("/rss.xml")]
-    [ResponseCache(Duration = 14400)]
+    [ResponseCache(Duration = Constants.CacheDurationJournalFeed)]
     public async Task<IActionResult> RssFeed(CancellationToken token = default)
     {
         var feed = await SetupSyndicationFeed(token);

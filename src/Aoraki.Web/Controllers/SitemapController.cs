@@ -19,7 +19,7 @@ public class SitemapController : Controller
     }
 
     [HttpGet("/sitemap.xml")]
-    [ResponseCache(Duration = 14400)]
+    [ResponseCache(Duration = Constants.CacheDurationSitemap)]
     public IActionResult Index()
         => new SitemapProvider(new BaseUrlProvider())
             .CreateSitemapIndex(new SitemapIndexModel(new List<SitemapIndexNode>
@@ -29,7 +29,7 @@ public class SitemapController : Controller
             }));
 
     [HttpGet("/sitemap-pages.xml")]
-    [ResponseCache(Duration = 14400)]
+    [ResponseCache(Duration = Constants.CacheDurationSitemap)]
     public IActionResult Pages()
         => new SitemapProvider(new BaseUrlProvider())
             .CreateSitemap(new SitemapModel(new List<SitemapNode>
@@ -42,7 +42,7 @@ public class SitemapController : Controller
             }));
 
     [HttpGet("/sitemap-posts.xml")]
-    [ResponseCache(Duration = 14400)]
+    [ResponseCache(Duration = Constants.CacheDurationSitemap)]
     public async Task<IActionResult> Posts()
         => new SitemapProvider(new BaseUrlProvider())
             .CreateSitemap(new SitemapModel(

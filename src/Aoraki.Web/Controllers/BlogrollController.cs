@@ -19,7 +19,7 @@ public class BlogrollController : Controller
         _blogrollService = blogrollService;
     }
 
-    [ResponseCache(Duration = 86400, VaryByQueryKeys = new[] { "page" })]
+    [ResponseCache(Duration = Constants.CacheDurationBlogrollIndex, VaryByQueryKeys = new[] { "page" })]
     public async Task<IActionResult> Index(int page = 1, CancellationToken token = default)
     {
         var blogsCount = await _blogrollService.GetTotalEntryCountAsync(token);

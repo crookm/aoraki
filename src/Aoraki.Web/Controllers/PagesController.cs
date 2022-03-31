@@ -7,6 +7,6 @@ namespace Aoraki.Web.Controllers;
 public class PagesController : Controller
 {
     [HttpGet("/colophon")]
-    [ResponseCache(Duration = 2629800)]
+    [ResponseCache(Duration = Constants.CacheDurationPagesColophon)]
     public IActionResult Colophon() => View();
 }
