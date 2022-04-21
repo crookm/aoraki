@@ -17,6 +17,7 @@
 
     <partial name="Canonical"/>
 
+    <!--suppress CssUnusedSymbol -->
     <style>
         html,
         body {
@@ -52,6 +53,12 @@
             display: table;
             clear: both;
         }
+        
+        nav > div:nth-of-type(2) {
+            margin-top: 9px;
+            font-size: 12px;
+            text-align: center;
+        }
 
         nav hr {
             border: none;
@@ -69,11 +76,11 @@
             background: #f2f2f2;
         }
 
-        article.journal .lead {
+        .lead {
             margin: 2px 0 0;
         }
 
-        article.journal h1.title {
+        h1.title {
             margin: 0;
         }
 
@@ -139,12 +146,26 @@
 <body>
 <nav>
     <div class="innerwidth">
-        <strong><a asp-controller="Journal" asp-action="Index">@Constants.SiteTitle.ToLower()</a></strong> /
-        <a asp-controller="Projects" asp-action="Index">projects</a> /
-        <a asp-controller="Blogroll" asp-action="Index">blogroll</a> /
-        <a asp-controller="Journal" asp-action="Archive">archive</a>
+        <strong><a asp-controller="Home" asp-action="Index">@Constants.SiteTitle.ToLower()</a></strong> /
+        <a asp-controller="Journal" asp-action="Index">journal</a> /
+        <a asp-controller="Projects" asp-action="Index">projects</a>
     </div>
     <hr/>
+
+    @if (IsSectionDefined("Submenu"))
+    {
+        @await RenderSectionAsync("Submenu", required: false)
+    }
+    else
+    {
+        switch (ViewContext.RouteData.Values["Controller"])
+        {
+            case "Blogroll":
+            case "Journal":
+                <partial name="Partials/Journal/JournalSubmenu"/>
+                break;
+        }
+    }
 </nav>
 
 <main>

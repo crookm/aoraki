@@ -14,20 +14,19 @@
             @Model.Published?.ToString("D")
         </time>
     </p>
-    @* @if (Model.Tags != null)
+    @if ((bool?)ViewData["ShowExcerpts"] ?? true)
     {
-        <p>[ @string.Join(", ", Model.Tags) ]</p>
-    } *@
-    <p>
-        @{
-            var postText = Model.ToPlainText();
-            var truncatedText = postText[..Math.Min(postText.Length, 250)];
-        }
-        @truncatedText...
-        <a asp-route="journal" asp-route-slug="@Model.RowKey"
-           asp-route-year="@Model.Published?.Year"
-           class="readon">
-            [ read on &rarr; ]
-        </a>
-    </p>
+        <p>
+            @{
+                var postText = Model.ToPlainText();
+                var truncatedText = postText[..Math.Min(postText.Length, 250)];
+            }
+            @truncatedText...
+            <a asp-route="journal" asp-route-slug="@Model.RowKey"
+               asp-route-year="@Model.Published?.Year"
+               class="readon">
+                [ read on &rarr; ]
+            </a>
+        </p>
+    }
 </section>

@@ -1,0 +1,40 @@
+@model HomeIndexViewModel
+@{
+    ViewData["Title"] = "home";
+    ViewData["ShowExcerpts"] = false;
+}
+
+<div class="innerwidth">
+    <div class="bio clearfix">
+        <img src="https://static.mattcrook.io/public-assets/me.jpg" alt="Profile picture"
+             style="float: left; width: 72px; padding: 0 15px 10px 0;"/>
+
+        <h1 class="title">Welcome to my site</h1>
+        <p class="lead">
+            Hi there, I'm Matt Crook. I work as a software engineer in the healthcare field in Auckland, New Zealand.
+        </p>
+    </div>
+    <hr/>
+
+    <h2>Recent posts</h2>
+    @foreach (var post in Model.RecentPosts)
+    {
+        <partial name="Partials/Journal/JournalEntryPreview" model="post" view-data="ViewData"/>
+    }
+    <p class="clearfix">
+        <a asp-controller="Journal" asp-action="Index" style="float: right;">
+            View all &rarr;
+        </a>
+    </p>
+
+    <h2>Recent projects</h2>
+    @foreach (var project in Model.RecentProjects)
+    {
+        <partial name="Partials/Projects/ProjectEntry" model="project"/>
+    }
+    <p class="clearfix">
+        <a asp-controller="Projects" asp-action="Index" style="float: right;">
+            View all &rarr;
+        </a>
+    </p>
+</div>

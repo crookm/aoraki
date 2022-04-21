@@ -89,7 +89,7 @@ public class Startup
                 defaults: new { controller = "Journal", action = "Read" });
             endpoints.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Journal}/{action=Index}/{id?}");
+                pattern: "{controller=Home}/{action=Index}/{id?}");
         });
     }
 }
