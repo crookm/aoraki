@@ -1,0 +1,141 @@
+@page
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "commands - ps advanced shortcut";
+}
+
+<div class="innerwidth">
+    <h1>Commands</h1>
+    <p>
+        <a href="/projects/psadvancedshortcut/docs">&laquo; back to docs</a>
+    </p>
+
+    <h2>Contents</h2>
+    <ul>
+        <li>
+            <a href="#new-shortcut">New-Shortcut</a>
+        </li>
+        <li>
+            <a href="#find-shortcut">Find-Shortcut</a>
+        </li>
+    </ul>
+
+    <h3 id="new-shortcut">New-Shortcut</h3>
+    <p>Creates a new shortcut with the desired properties.</p>
+    <pre><code>New-Shortcut
+    -Name &lt;string&gt;
+    -Target &lt;string&gt;
+    [-Arguments &lt;string&gt;]
+    [-Path &lt;string&gt;]
+    [-Description &lt;string&gt;]
+    [-WorkingDirectory &lt;string&gt;]
+    [-WindowStyle &lt;WindowStyle&gt;]
+    [-IconPath &lt;string&gt;]
+    [-IconIndex &lt;int&gt;]
+    [-AppUserModelId &lt;string&gt;]
+    [-ToastActivatorClassId &lt;Guid&gt;]
+    [-Force]
+    [&lt;CommonParameters&gt;]</code></pre>
+
+    <h4>Examples</h4>
+    <p>Create a simple shortcut named MyShortcut in the current directory, targeting the calculator:</p>
+    <pre><code>New-Shortcut -Name MyShortcut -Target calc.exe</code></pre>
+
+    <p>Creates a shortcut on the desktop called MyDesktopShortcut, targeting the calculator:</p>
+    <pre><code>New-Shortcut -Name MyDesktopShortcut -Path ~\Desktop -Target calc.exe</code></pre>
+
+    <p>Creates a shortcut in the current directory named TreeCalc with a tree icon, targeting the calculator:</p>
+    <pre><code>New-Shortcut -Name TreeCalc -Target calc.exe -IconPath C:\Windows\System32\SHELL32.dll -IconIndex 41</code></pre>
+
+    <h4>Parameters</h4>
+    <dl>
+        <dt>Name</dt>
+        <dd>The name of the shortcut. Will automatically append <code>.lnk</code> if not included - but note that the file extension is always hidden by the OS. If a shortcut by this name already exists in the directory, you must specify -Force to replace it.</dd>
+
+        <dt>Target</dt>
+        <dd>The executable or shell destination of the shortcut.</dd>
+
+        <dt>Arguments</dt>
+        <dd>Arguments to pass into the target.</dd>
+
+        <dt>Path</dt>
+        <dd>The directory to create the shortcut under. The directory must exist and be writable.</dd>
+
+        <dt>Description</dt>
+        <dd>A string that describes the shortcut. This will be displayed when the user hovers over the shortcut icon.</dd>
+
+        <dt>WorkingDirectory</dt>
+        <dd>Specifies the directory that the target should be launched under.</dd>
+
+        <dt>WindowStyle</dt>
+        <dd>The style of the window that the target should open in. The acceptable values are <code>Normal</code>, <code>Maximized</code>, and <code>Minimized</code>. Note that this does not work for all applications.</dd>
+
+        <dt>IconPath</dt>
+        <dd>The full path to a file which contains an icon. This is usually a .ico file, but may also include .icl, .exe, and .dll files.</dd>
+
+        <dt>IconIndex</dt>
+        <dd>Icon files, as well as binaries, may contain multiple icons. You can specify the offset with this parameter. The index starts at zero.</dd>
+
+        <dt>AppUserModelId</dt>
+        <dd>The AUMID to set for this shortcut. The format typically follows Java's <a href="https://docs.oracle.com/javase/specs/jls/se6/html/packages.html#7.7" rel="noopener">package name rules</a>, but can be any string. This only applies to Windows 8 and above.</dd>
+
+        <dt>ToastActivatorClassId</dt>
+        <dd>Specifies the GUID for the registered COM class which will be activated when a user clicks on a notification in the Action Center from your application. This only applies to Windows 8 and above.</dd>
+
+        <dt>Force</dt>
+        <dd>Specifies that an existing shortcut should be overwritten.</dd>
+    </dl>
+
+    <h4>Inputs</h4>
+    <p>
+        <i>None</i>
+    </p>
+
+    <h4>Outputs</h4>
+    <p>
+        <i>None</i>
+    </p>
+
+    <hr/>
+
+    <h3 id="find-shortcut">Find-Shortcut</h3>
+    <p>Finds a shortcut that links to the specified target, within a specified directory.</p>
+    <p>NOTE: This cmdlet does not currently work on Windows 7.</p>
+
+    <pre><code>Find-Shortcut
+    -Target &lt;string&gt;
+    [-Path &lt;string&gt;]
+    [-Recurse]
+    [&lt;CommonParameters&gt;]</code></pre>
+
+    <h4>Examples</h4>
+    <p>Find the shortcut files in the current folder which target the calculator:</p>
+    <pre><code>Find-Shortcut -Target C:\Windows\System32\calc.exe</code></pre>
+
+    <h4>Parameters</h4>
+    <dl>
+        <dt>Target</dt>
+        <dd>
+            The absolute path of the target you wish to find shortcuts for.
+            Note that if you created a shortcut with a non-absolute path to a target, the OS will fill-in the rest of the path to become absolute at creation time. You will not, for example, be able to find any shortcuts which target <code>calc.exe</code>.
+        </dd>
+
+        <dt>Path</dt>
+        <dd>The directory which should be searched to find shortcuts. Defaults to the current directory. The directory must exist.</dd>
+
+        <dt>Recurse</dt>
+        <dd>Recursively search into subdirectories, including network drives and symbolic links.</dd>
+    </dl>
+
+    <h4>Inputs</h4>
+    <p>A string representing the full path to the target may be supplied from the pipeline, instead of using the parameter <code>-Target</code>.</p>
+
+    <h4>Outputs</h4>
+    <p>String array of absolute file paths of the shortcuts which match the target specified.</p>
+</div>
+
+@section Submenu
+{
+    <partial name="Shared/PsAdvancedShortcutSubmenu"/>
+}

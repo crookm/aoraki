@@ -1,0 +1,39 @@
+@page
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "installation - ps advanced shortcut";
+}
+
+<div class="innerwidth">
+    <h1>Installation</h1>
+    <p>
+        <a href="/projects/psadvancedshortcut/docs">&laquo; back to docs</a>
+    </p>
+
+    <p>You can install PSAdvancedShortcut via the <a href="https://www.powershellgallery.com/packages/PSAdvancedShortcut" rel="noopener">Powershell Gallery</a>:</p>
+    <pre><code>Install-Module -Name PSAdvancedShortcut</code></pre>
+
+    <h3>Minimum system requirements</h3>
+    <dl>
+        <dt>Operating system</dt>
+        <dd>Windows 7 32-bit</dd>
+
+        <dt>Powershell version</dt>
+        <dd>2.0</dd>
+    </dl>
+
+    <h3>Recommended system requirements</h3>
+    <dl>
+        <dt>Operating system</dt>
+        <dd>Windows 10 64-bit</dd>
+
+        <dt>Powershell version</dt>
+        <dd>5.0</dd>
+    </dl>
+</div>
+
+@section Submenu
+{
+    <partial name="Shared/PsAdvancedShortcutSubmenu"/>
+}

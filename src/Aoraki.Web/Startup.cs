@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Aoraki.Projects.FridgeMagnet.Integration;
+using Aoraki.Projects.PsAdvancedShortcut.Integration;
 using Aoraki.Web.Contracts;
 using Aoraki.Web.Middleware;
 using Aoraki.Web.Options;
@@ -43,11 +44,14 @@ public class Startup
             .AddSingleton<IBlogrollService, BlogrollService>()
             .AddSingleton<IStorageFactory, StorageFactory>();
 
-        services.SetupFridgeMagnetProject();
+        services
+            .SetupFridgeMagnetProject()
+            .SetupPsAdvancedShortcutProject();
 
         services.AddAntiforgery();
         services.AddResponseCaching();
         services.AddControllersWithViews();
+        services.AddRazorPages();
         services.AddRouting(options =>
         {
             options.LowercaseUrls = true;
@@ -90,6 +94,7 @@ public class Startup
             endpoints.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+            endpoints.MapRazorPages();
         });
     }
 }

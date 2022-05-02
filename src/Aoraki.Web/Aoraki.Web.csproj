@@ -19,5 +19,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\projects\fridgemagnet\Aoraki.Projects.FridgeMagnet.Integration\Aoraki.Projects.FridgeMagnet.Integration.csproj" />
+        <ProjectReference Include="..\projects\psadvancedshortcut\Aoraki.Projects.PsAdvancedShortcut.Integration\Aoraki.Projects.PsAdvancedShortcut.Integration.csproj" />
+        <ProjectReference Include="..\projects\psadvancedshortcut\Aoraki.Projects.PsAdvancedShortcut.Web\Aoraki.Projects.PsAdvancedShortcut.Web.csproj" />
     </ItemGroup>
 </Project>

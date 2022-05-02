@@ -1,7 +1,7 @@
 @model IProjectDefinition
 
 <div class="innerwidth">
-    <component type="Model.EntryComponent" render-mode="WebAssemblyPrerendered"/>
+    <component type="Model.BlazorEntryComponent" render-mode="WebAssemblyPrerendered"/>
 </div>
 
 @section Meta
@@ -11,9 +11,9 @@
 
 @section Styles
 {
-    @if (!string.IsNullOrWhiteSpace(Model.StyleSheetUri))
+    @if (!string.IsNullOrWhiteSpace(Model.BlazorStyleSheetUri))
     {
-        <link href="@Model.StyleSheetUri" asp-append-version="true" rel="stylesheet"/>
+        <link href="@Model.BlazorStyleSheetUri" asp-append-version="true" rel="stylesheet"/>
     }
 }
 

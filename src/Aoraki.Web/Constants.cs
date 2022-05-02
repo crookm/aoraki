@@ -1,5 +1,6 @@
 namespace Aoraki.Web;
 
+// ReSharper disable InconsistentNaming
 // Disable hardcoded URI warning
 #pragma warning disable S1075
 

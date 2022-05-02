@@ -1,0 +1,34 @@
+@page
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "changelog - ps advanced shortcut";
+}
+
+<div class="innerwidth">
+    <h1>Changelog</h1>
+
+    <h2>v0.2.1</h2>
+    <p class="lead">Released <time datetime="2021-03-16 06:09:00Z">16 March 2021 06:09</time></p>
+    <ul>
+        <li>Fix an inssue where the Toast Activator Class Id and Application User Model Id would not be set correctly</li>
+    </ul>
+
+    <h2>v0.2.0</h2>
+    <p class="lead">Released <time datetime="2021-03-09 10:10:00Z">09 March 2021 10:10</time></p>
+    <ul>
+        <li>Implement ability to set icons when creating shortcuts</li>
+        <li>Make Find-Shortcut target search case insensitive</li>
+    </ul>
+
+    <h2>v0.1.0</h2>
+    <p class="lead">Released <time datetime="2021-03-09 07:10:00Z">09 March 2021 07:10</time></p>
+    <ul>
+        <li>Initial release</li>
+    </ul>
+</div>
+
+@section Submenu
+{
+    <partial name="Shared/PsAdvancedShortcutSubmenu"/>
+}

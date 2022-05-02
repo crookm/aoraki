@@ -1,0 +1,38 @@
+@page
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "ps advanced shortcut";
+}
+
+<div class="innerwidth">
+    <h1>PSAdvancedShortcut</h1>
+
+    <a href="https://www.powershellgallery.com/packages/PSAdvancedShortcut" rel="noopener">
+        <img src="https://img.shields.io/powershellgallery/v/PSAdvancedShortcut?logo=powershell&logoColor=aaa&style=flat-square" alt="Powershell gallery current version badge"/>
+        <img src="https://img.shields.io/powershellgallery/dt/PSAdvancedShortcut?logo=powershell&logoColor=aaa&style=flat-square" alt="Powershell gallery total download count badge"/>
+        <img src="https://img.shields.io/powershellgallery/p/PSAdvancedShortcut?logo=powershell&logoColor=aaa&style=flat-square" alt="Powershell gallery platform badge"/>
+    </a>
+
+    <p>
+        PSAdvancedShortcut is a tool to allow the creation of shortcut files on Windows machines.
+        Its purpose is to make the powerful hidden properties of shortcuts easy to set, in a programmatic way.
+    </p>
+
+    <p>Some of the properties that can be set include:</p>
+    <ul>
+        <li>Target</li>
+        <li>Arguments</li>
+        <li>Working directory</li>
+        <li>Description</li>
+        <li>Window launch style</li>
+        <li>Icon (including index offset)</li>
+        <li>Application user model ID (AUMID)</li>
+        <li>Toast activator class ID</li>
+    </ul>
+</div>
+
+@section Submenu
+{
+    <partial name="Shared/PsAdvancedShortcutSubmenu"/>
+}
