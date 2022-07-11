@@ -36,7 +36,7 @@ public class Startup
             });
 
         services
-            .Configure<StorageOptions>(Configuration.GetSection(StorageOptions.HierarchyName));
+            .Configure<ConnectionStrings>(Configuration.GetSection(ConnectionStrings.HierarchyName));
 
         services
             .AddSingleton<IJournalService, JournalService>()
